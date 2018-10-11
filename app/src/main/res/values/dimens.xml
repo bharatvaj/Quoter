@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="small_horizontal_margin">8dp</dimen>
+    <dimen name="small_vertical_margin">8dp</dimen>
+
+    <dimen name="quote_text_size">42dp</dimen>
+    <dimen name="speaker_text_size">24dp</dimen>
+    <dimen name="default_text_size">20dp</dimen>
+</resources>

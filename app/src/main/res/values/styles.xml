@@ -1,9 +1,17 @@
 <resources>
 
 
-    <style name="AppTheme.TextViewStyle" parent="TextAppearance.AppCompat.Body1">
+    <style name="AppTheme.TextViewStyle" parent="TextAppearance.AppCompat.Headline">
         <item name="android:color">#ffffff</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:fontFamily">serif-monospace</item>
     </style>
+
+    <style name="AppTheme.QuoteTextStyle" parent="AppTheme.TextViewStyle">
+        <item name="android:textSize">@dimen/quote_text_size</item>
+        <item name="android:fontFamily">serif</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
@@ -11,6 +19,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 </resources>
