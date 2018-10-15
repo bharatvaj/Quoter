@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Quoter</string>
     <string name="speaker_format">-%1$s</string>
+
+    <string name="settings_pref_file">setting_pref_file</string>
+    <string name="settings_isDark">settingsIsDark</string>
 </resources>

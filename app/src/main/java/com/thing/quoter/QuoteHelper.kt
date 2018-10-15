@@ -1,20 +1,19 @@
 package com.thing.quoter
 
-import android.annotation.SuppressLint
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thing.quoter.model.Quote
+import java.util.*
 
 object QuoteHelper {
-    @SuppressLint("StaticFieldLeak") //TODO CORRECT
-    private var db : FirebaseFirestore
-    private var quotesRef : CollectionReference
-    init {
-        db = FirebaseFirestore.getInstance();
-        quotesRef = db.collection("quotes");
+    private var quotesRef: CollectionReference = FirebaseFirestore.getInstance().collection("quotes")
+    private var quotes = FirestoreList(Quote::class.java, quotesRef)
+    private var randomIndex = Random()
+
+    fun getRandomQuote(): Quote {
+        return if (quotes.size == 0)
+            Quote("Loading awesome quotes...", "Quoter")
+        else quotes.keyAt(randomIndex.nextInt(quotes.size))
     }
 
-    fun getQuotesRef() : CollectionReference {
-        return quotesRef
-    }
 }

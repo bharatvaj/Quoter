@@ -2,7 +2,6 @@
 
 
     <style name="AppTheme.TextViewStyle" parent="TextAppearance.AppCompat.Headline">
-        <item name="android:color">#ffffff</item>
         <item name="android:textSize">@dimen/default_text_size</item>
         <item name="android:fontFamily">serif-monospace</item>
     </style>
@@ -12,6 +11,20 @@
         <item name="android:fontFamily">serif</item>
     </style>
 
+    <style name="AppTheme.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorLightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorLightPrimaryDark</item>
+        <item name="colorAccent">@color/colorLightAccent</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+        <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
+        <item name="android:background">@color/colorLightPrimary</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
@@ -19,6 +32,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/AppTheme.TextViewStyle</item>
+        <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 

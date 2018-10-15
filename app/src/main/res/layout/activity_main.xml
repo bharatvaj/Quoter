@@ -9,25 +9,36 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_marginTop="64dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/left_quote"
-        android:tint="@android:color/white" />
+    <include layout="@layout/header_section" />
 
-    <TextView
-        style="@style/AppTheme.QuoteTextStyle"
-        android:id="@+id/quoteTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_marginTop="@dimen/small_vertical_margin"
-        android:textSize="@dimen/speaker_text_size"
-        android:id="@+id/speakerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="64dp"
+            android:src="@drawable/left_quote"
+            android:tint="?colorAccent" />
+
+        <TextView
+            android:id="@+id/quoteTextView"
+            style="@style/AppTheme.QuoteTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left" />
+
+        <TextView
+            android:id="@+id/speakerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:gravity="end"
+            android:textSize="@dimen/speaker_text_size" />
+    </LinearLayout>
+
+
 </LinearLayout>
