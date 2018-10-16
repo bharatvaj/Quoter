@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Quoter</string>
     <string name="company_name" translatable="false">Thing Studio</string>
     <string name="speaker_format">-%1$s</string>
+    <string name="speaker_unknown">Unknown</string>
 
     <string-array name="onboard_msgs">
         <item>Welcome to quoter! tap to continue</item>

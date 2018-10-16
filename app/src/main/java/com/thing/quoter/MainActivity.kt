@@ -26,7 +26,7 @@ class MainActivity : AppActivity(), View.OnClickListener {
         quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in)).run {
             if (quote == null) return show("Finding the right quotes for you")
             quoteTextView.text = quote.quote
-            speakerTextView.text = getString(R.string.speaker_format, quote.speaker)
+            speakerTextView.text = getString(R.string.speaker_format, if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker)
         }
     }
 
