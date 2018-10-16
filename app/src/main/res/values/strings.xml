@@ -1,7 +1,17 @@
 <resources>
-    <string name="app_name">Quoter</string>
+    <string name="app_name" translatable="false">Quoter</string>
+    <string name="company_name" translatable="false">Thing Studio</string>
     <string name="speaker_format">-%1$s</string>
+
+    <string-array name="onboard_msgs">
+        <item>Welcome to quoter! tap to continue</item>
+        <!--<item>Tap the sun icon to change theme</item>-->
+        <!--<item>Tap on the language icon to change locale</item>-->
+        <!--<item>Tap on the alphabet icon to change fonts</item>-->
+        <item>You are all set! Thanks for using this app</item>
+    </string-array>
 
     <string name="settings_pref_file">setting_pref_file</string>
     <string name="settings_isDark">settingsIsDark</string>
+    <string name="settings_isFirstTime">settingsIsFirstTime</string>
 </resources>
