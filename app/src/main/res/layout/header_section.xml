@@ -10,20 +10,14 @@
     <ImageButton
         android:id="@+id/themeToggle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_sun"
-        android:tint="?colorAccent" />
-
-    <Space
-        android:layout_width="@dimen/horizontal_margin"
-        android:layout_height="wrap_content" />
+        android:layout_height="24dp"
+        android:src="@drawable/ic_sun"/>
 
     <ImageButton
         android:id="@+id/fontToggle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:src="@drawable/ic_font"
-        android:tint="?colorAccent"
-        android:visibility="gone" />
+        android:layout_marginStart="@dimen/small_horizontal_margin"/>
 
 </LinearLayout>

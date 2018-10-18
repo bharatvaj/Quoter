@@ -21,17 +21,18 @@
 
         <TextView
             android:id="@+id/quoteTextView"
-            style="@style/AppTheme.QuoteTextStyle"
+            style="@style/AppTheme.QuoteTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center" />
 
         <TextView
             android:id="@+id/speakerTextView"
+            style="@style/AppTheme.SpeakerTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_vertical_margin"
-            android:gravity="end"
+            android:gravity="center"
             android:textSize="@dimen/speaker_text_size" />
     </LinearLayout>
 

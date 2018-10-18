@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_pref_file">setting_pref_file</string>
+    <string name="settings_isDark">settingsIsDark</string>
+    <string name="settings_isFontSerif">settingsIsFontSerif</string>
+    <string name="settings_isFirstTime">settingsIsFirstTime</string>
+</resources>

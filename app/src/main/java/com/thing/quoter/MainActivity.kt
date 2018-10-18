@@ -1,7 +1,6 @@
 package com.thing.quoter
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -11,6 +10,11 @@ import kotlinx.android.synthetic.main.header_section.*
 
 class MainActivity : AppActivity(), View.OnClickListener {
 
+    private fun toggleFont() {
+        isFontSerif = !isFontSerif
+        recreate()
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.themeToggle -> {
@@ -18,6 +22,7 @@ class MainActivity : AppActivity(), View.OnClickListener {
             }
             R.id.fontToggle -> {
                 //TODO change font app globally
+                toggleFont()
             }
         }
     }
@@ -26,7 +31,7 @@ class MainActivity : AppActivity(), View.OnClickListener {
         quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in)).run {
             if (quote == null) return show("Finding the right quotes for you")
             quoteTextView.text = quote.quote
-            speakerTextView.text = getString(R.string.speaker_format, if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker)
+            speakerTextView.text = if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker
         }
     }
 
@@ -51,8 +56,13 @@ class MainActivity : AppActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
         setContentView(R.layout.activity_main)
+        //
+        quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.SANS_SERIF
+        //
         themeToggle.setOnClickListener(this)
+        fontToggle.setOnClickListener(this)
         if (isFirstTime)
             onboard()
         else {
