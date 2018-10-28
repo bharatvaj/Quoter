@@ -1,19 +1,23 @@
 package com.thing.quoter
 
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
+import com.gunhansancar.changelanguageexample.helper.LocaleHelper
 import com.thing.quoter.model.Quote
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_section.*
 
-class MainActivity : AppActivity(), View.OnClickListener {
+class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListener {
 
-    private fun toggleFont() {
-        isFontSerif = !isFontSerif
-        recreate()
-    }
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -24,12 +28,34 @@ class MainActivity : AppActivity(), View.OnClickListener {
                 //TODO change font app globally
                 toggleFont()
             }
+            R.id.languageSelect -> {
+                LocaleHelper.setLocale(this, "ta")
+                recreate()
+            }
+            R.id.toggleSpeaker -> {
+                speakerTextView.visibility = if (speakerTextView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
         }
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        val requestOption = RequestOptions().centerCrop()
+                .signature(ObjectKey(System.currentTimeMillis().toString())).format(DecodeFormat.PREFER_ARGB_8888)
+        Glide.with(this)
+                .load(QuoteHelper.getImage())
+                .apply(requestOption)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(bg)
+        return true
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase))
     }
 
     fun updateQuote(quote: Quote?) {
         quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in)).run {
-            if (quote == null) return show("Finding the right quotes for you")
+            if (quote == null) return show(resources.getString(R.string.quote_loading))
             quoteTextView.text = quote.quote
             speakerTextView.text = if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker
         }
@@ -54,6 +80,7 @@ class MainActivity : AppActivity(), View.OnClickListener {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
@@ -63,6 +90,9 @@ class MainActivity : AppActivity(), View.OnClickListener {
         //
         themeToggle.setOnClickListener(this)
         fontToggle.setOnClickListener(this)
+        languageSelect.setOnClickListener(this)
+        toggleSpeaker.setOnClickListener(this)
+        rootView.setOnLongClickListener(this)
         if (isFirstTime)
             onboard()
         else {

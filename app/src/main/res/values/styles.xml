@@ -26,7 +26,8 @@
         <item name="colorAccent">@color/colorLightAccent</item>
         <item name="android:textViewStyle">@style/AppTheme.QuoterTextViewStyle</item>
         <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
-        <item name="android:background">?colorPrimary</item>
+        <item name="android:windowBackground">?colorPrimary</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!-- Base application theme. -->
@@ -37,7 +38,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/AppTheme.QuoterTextViewStyle</item>
         <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
-        <item name="android:background">?colorPrimary</item>
+        <item name="android:windowBackground">?colorPrimary</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 

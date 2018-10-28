@@ -11,7 +11,7 @@ open class AppActivity : AppCompatActivity() {
     private var initialized = false
     var isFirstTime = true
     var isDark = false
-    var isFontSerif = false
+    var isFontSerif = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,13 +19,18 @@ open class AppActivity : AppCompatActivity() {
             val preferences = getSharedPreferences(getString(R.string.settings_pref_file), Context.MODE_PRIVATE)
             isFirstTime = preferences.getBoolean(getString(R.string.settings_isFirstTime), true)
             isDark = preferences.getBoolean(getString(R.string.settings_isDark), true)
-            isFontSerif = preferences.getBoolean(getString(R.string.settings_isFontSerif), false)
+            isFontSerif = preferences.getBoolean(getString(R.string.settings_isFontSerif), true)
             initialized = true
         }
     }
 
     fun toggleTheme() {
         isDark = !isDark
+        recreate()
+    }
+
+    fun toggleFont() {
+        isFontSerif = !isFontSerif
         recreate()
     }
 

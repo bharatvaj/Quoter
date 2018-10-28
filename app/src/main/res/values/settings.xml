@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_pref_file">setting_pref_file</string>
-    <string name="settings_isDark">settingsIsDark</string>
-    <string name="settings_isFontSerif">settingsIsFontSerif</string>
-    <string name="settings_isFirstTime">settingsIsFirstTime</string>
+    <string name="settings_pref_file" translatable="false">setting_pref_file</string>
+    <string name="settings_isDark" translatable="false">settingsIsDark</string>
+    <string name="settings_isFontSerif" translatable="false">settingsIsFontSerif</string>
+    <string name="settings_isFirstTime" translatable="false">settingsIsFirstTime</string>
 </resources>

@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Quoter</string>
+    <string name="app_name">Quoter</string>
     <string name="company_name" translatable="false">Thing Studio</string>
     <string name="speaker_unknown">Unknown</string>
+    <string name="quote_loading">Finding the right quotes for you</string>
+
 
     <string-array name="onboard_msgs">
         <item>Welcome to quoter! tap to continue</item>
@@ -10,5 +12,11 @@
         <!--<item>Tap on the alphabet icon to change fonts</item>-->
         <item>You are all set! Thanks for using this app</item>
     </string-array>
+
+    <!--hints-->
+    <string name="theme_toggle_hint">Toggle Light</string>
+    <string name="font_toggle_hint">Toggle Font</string>
+    <string name="language_select_hint">Select Language</string>
+    <string name="toggle_speaker_hint">Toggle Speaker Name</string>
 
 </resources>

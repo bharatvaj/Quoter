@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/horizontal_margin"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include layout="@layout/header_section" />
+    <ImageView
+        android:alpha="0.75"
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        layout="@layout/header_section" />
 
     <LinearLayout
+        android:padding="@dimen/horizontal_margin"
         android:id="@+id/quoteContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -35,5 +43,6 @@
             android:gravity="center"
             android:textSize="@dimen/speaker_text_size" />
     </LinearLayout>
+
 
 </RelativeLayout>
