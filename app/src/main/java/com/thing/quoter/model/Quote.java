@@ -8,7 +8,7 @@ public class Quote {
     private String speaker;
 
     public Quote() {
-        
+
     }
 
     public Quote(String quote, String speaker) {

@@ -11,7 +11,7 @@
     <ImageButton
         android:id="@+id/themeToggle"
         android:layout_width="0dp"
-        android:layout_height="24dp"
+        android:layout_height="@android:dimen/app_icon_size"
         android:layout_weight="1"
         android:src="@drawable/ic_shining_sun"
         android:contentDescription="@string/theme_toggle_hint"/>
@@ -19,7 +19,7 @@
     <ImageButton
         android:id="@+id/fontToggle"
         android:layout_width="0dp"
-        android:layout_height="24dp"
+        android:layout_height="@android:dimen/app_icon_size"
         android:layout_weight="1"
         android:src="@drawable/ic_text"
         android:layout_marginStart="@dimen/horizontal_margin"
@@ -29,7 +29,7 @@
     <ImageButton
         android:id="@+id/languageSelect"
         android:layout_width="0dp"
-        android:layout_height="24dp"
+        android:layout_height="@android:dimen/app_icon_size"
         android:layout_weight="1"
         android:src="@drawable/ic_translate"
         android:layout_marginStart="@dimen/horizontal_margin"
@@ -38,7 +38,7 @@
     <ImageButton
         android:id="@+id/toggleSpeaker"
         android:layout_width="0dp"
-        android:layout_height="24dp"
+        android:layout_height="@android:dimen/app_icon_size"
         android:layout_weight="1"
         android:src="@drawable/ic_user"
         android:layout_marginStart="@dimen/horizontal_margin"

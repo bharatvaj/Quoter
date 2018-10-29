@@ -1,15 +1,21 @@
 package com.thing.quoter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.ObjectKey
 import com.gunhansancar.changelanguageexample.helper.LocaleHelper
 import com.thing.quoter.model.Quote
@@ -17,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_section.*
 
 class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListener {
-
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -38,15 +43,56 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         }
     }
 
+    fun startLoader(quote: Quote? = null) {
+        if (quote != null) {
+            quoteTextView.text = quote.quote;
+            speakerTextView.text = quote.speaker
+        }
+        var anim = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
+        anim.repeatCount = Animation.INFINITE
+        anim.repeatMode = Animation.REVERSE
+        quoteContainer.startAnimation(anim)
+    }
+
+    fun stopLoader() {
+        quoteContainer.clearAnimation()
+    }
+
     override fun onLongClick(v: View?): Boolean {
+        if (!isDark) {
+            QuoteHelper.shouldLoadImage = true
+            toggleTheme()
+            return false
+        }
+        loadImage()
+        return true
+    }
+
+    private fun loadImage() {
+        startLoader()
         val requestOption = RequestOptions().centerCrop()
-                .signature(ObjectKey(System.currentTimeMillis().toString())).format(DecodeFormat.PREFER_ARGB_8888)
+                .signature(ObjectKey(System.currentTimeMillis().toString()))
+                .format(DecodeFormat.PREFER_RGB_565)
         Glide.with(this)
-                .load(QuoteHelper.getImage())
+                .load(QuoteHelper.imagesUrl)
                 .apply(requestOption)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(bg)
-        return true
+                .into(object : CustomViewTarget<RelativeLayout, Drawable>(rootView) {
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        stopLoader()
+                    }
+
+                    @SuppressLint("ResourceType")
+                    override fun onResourceCleared(placeholder: Drawable?) {
+                        rootView.setBackgroundColor(ContextCompat.getColor(this@MainActivity, R.color.colorPrimary))
+                    }
+
+                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                        stopLoader()
+                        rootView.background = resource
+                        rootView.background.alpha = 220
+                    }
+                })
     }
 
     override fun attachBaseContext(newBase: Context?) {
@@ -54,15 +100,14 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
     }
 
     fun updateQuote(quote: Quote?) {
-        quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in)).run {
-            if (quote == null) return show(resources.getString(R.string.quote_loading))
-            quoteTextView.text = quote.quote
-            speakerTextView.text = if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker
-        }
+        if (quote == null) return show(resources.getString(R.string.quote_loading))
+        quoteTextView.text = quote.quote
+        speakerTextView.text = if (quote.speaker.isEmpty()) getString(R.string.speaker_unknown) else quote.speaker
     }
 
     //Replacement for Toast
     fun show(message: String, speaker: String = getString(R.string.app_name)) {
+        quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in))
         updateQuote(Quote(message, speaker))
     }
 
@@ -96,11 +141,15 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         if (isFirstTime)
             onboard()
         else {
-            updateQuote(QuoteHelper.getQuote(true))
+            updateQuote(QuoteHelper.stashedQuote)
             //then register click
             rootView.setOnClickListener {
                 updateQuote(QuoteHelper.getQuote())
             }
+        }
+        if (QuoteHelper.shouldLoadImage) {
+            loadImage()
+            QuoteHelper.shouldLoadImage = false
         }
     }
 }

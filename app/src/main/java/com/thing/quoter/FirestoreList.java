@@ -3,9 +3,10 @@ package com.thing.quoter;
 import android.databinding.ObservableArrayMap;
 import android.databinding.ObservableMap;
 
-import com.google.firebase.firestore.*;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.ParameterizedType;
 
 public class FirestoreList<T> extends ObservableArrayMap<T, String> {
