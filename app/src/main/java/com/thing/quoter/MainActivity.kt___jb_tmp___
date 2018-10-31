@@ -115,6 +115,7 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
                 .load("https://media.timeout.com/images/101759135/630/472/image.jpg")
                 .resize(420, 300)
                 .centerCrop()
+                .fit()
                 .into(object : Target {
                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 

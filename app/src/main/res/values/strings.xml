@@ -7,9 +7,10 @@
 
     <string-array name="onboard_msgs">
         <item>Welcome to quoter! tap to continue</item>
-        <!--<item>Tap the sun icon to change theme</item>-->
-        <!--<item>Tap on the language icon to change locale</item>-->
-        <!--<item>Tap on the alphabet icon to change fonts</item>-->
+        <item>Tap the sun icon to change theme</item>
+        <item>Tap on the language icon to change locale</item>
+        <item>Hold to change background</item>
+        <item>Swipe up to share!</item>
         <item>You are all set! Thanks for using this app</item>
     </string-array>
 
@@ -18,5 +19,7 @@
     <string name="font_toggle_hint">Toggle Font</string>
     <string name="language_select_hint">Select Language</string>
     <string name="toggle_speaker_hint">Toggle Speaker Name</string>
+
+    <string name="share_text">Save as</string>
 
 </resources>

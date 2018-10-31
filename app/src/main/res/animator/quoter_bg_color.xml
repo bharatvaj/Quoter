@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator android:propertyName="background"
+        android:valueType="colorType"
+        android:interpolator="@android:interpolator/fast_out_extra_slow_in"
+        android:duration="200"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:valueFrom="@color/colorPrimary"
+        android:valueTo="@color/colorPrimaryDark"/>
+</set>
