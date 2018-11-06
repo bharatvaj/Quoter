@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:dividerPadding="@dimen/horizontal_margin"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:padding="@dimen/small_horizontal_margin"
+    tools:showIn="@layout/activity_main">
+
+    <ImageButton
+        android:id="@+id/shareBtn"
+        android:layout_width="0dp"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_weight="1"
+        android:contentDescription="@string/theme_toggle_hint"
+        android:src="@drawable/ic_share_button" />
+</LinearLayout>

@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:dividerPadding="@dimen/horizontal_margin"
     android:layoutDirection="rtl"
     android:padding="@dimen/small_horizontal_margin"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:showIn="@layout/activity_main">
 
 
     <ImageButton
@@ -27,11 +29,11 @@
         android:visibility="gone"/>
 
     <ImageButton
-        android:id="@+id/languageSelect"
+        android:id="@+id/providerSelect"
         android:layout_width="0dp"
         android:layout_height="@android:dimen/app_icon_size"
         android:layout_weight="1"
-        android:src="@drawable/ic_translate"
+        android:src="@drawable/ic_newspaper"
         android:layout_marginStart="@dimen/horizontal_margin"
         android:contentDescription="@string/language_select_hint"/>
 
