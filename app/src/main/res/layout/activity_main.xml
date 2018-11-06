@@ -5,42 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/imageQuoteContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
-        <LinearLayout
-            android:id="@+id/quoteContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/horizontal_margin">
-
-            <TextView
-                android:id="@+id/quoteTextView"
-                style="@style/AppTheme.QuoteTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/speakerTextView"
-                style="@style/AppTheme.SpeakerTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_vertical_margin"
-                android:gravity="center"
-                android:textSize="@dimen/speaker_text_size" />
-        </LinearLayout>
-    </RelativeLayout>
+    <include layout="@layout/content_main" />
 
     <RelativeLayout
         android:id="@+id/menuContainer"
@@ -48,8 +13,24 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <include
-            layout="@layout/header_section" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/header_section" />
+
+            <FrameLayout
+                android:id="@+id/optionFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:background="@drawable/option_menu_background"
+                android:elevation="@dimen/elevation_small" />
+        </LinearLayout>
 
         <include
             layout="@layout/footer_section"

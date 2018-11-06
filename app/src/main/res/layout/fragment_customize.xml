@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:dividerPadding="@dimen/margin_medium"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_small"
+    tools:context=".fragment.CustomizeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/themeToggle"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/theme_toggle_hint"
+            android:src="@drawable/ic_color_palette" />
+
+        <ImageButton
+            android:id="@+id/backgroundChange"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/theme_toggle_hint"
+            android:src="@drawable/ic_paint_roller" />
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/fontToggle"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="@android:dimen/app_icon_size"-->
+        <!--android:layout_weight="1"-->
+        <!--android:src="@drawable/ic_text"-->
+        <!--android:layout_marginStart="@dimen/horizontal_margin"-->
+        <!--android:contentDescription="@string/font_toggle_hint"-->
+        <!--android:visibility="gone"/>-->
+
+        <ImageButton
+            android:id="@+id/toggleSpeaker"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_weight="1"
+            android:contentDescription="@string/toggle_speaker_hint"
+            android:src="@drawable/ic_author_sign" />
+
+    </LinearLayout>
+</LinearLayout>

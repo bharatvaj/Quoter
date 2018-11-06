@@ -7,9 +7,6 @@
 
     <string-array name="onboard_msgs">
         <item>Welcome to quoter! tap to continue</item>
-        <item>Tap the sun icon to change theme</item>
-        <item>Tap on the language icon to change locale</item>
-        <item>Hold to change background</item>
         <item>Tap share button to share the current quote</item>
         <item>You are all set! Thanks for using this app</item>
     </string-array>
