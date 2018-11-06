@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_medium">
+
+    <!--Change to ImageView to support other images-->
+    <ImageButton
+        android:id="@+id/providerImage"
+        android:layout_width="@dimen/image_small"
+        android:layout_height="@dimen/image_small"
+        android:src="@drawable/ic_globe" />
+
+    <TextView
+        android:id="@+id/providerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</LinearLayout>

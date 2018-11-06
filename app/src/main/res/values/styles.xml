@@ -20,7 +20,8 @@
     </style>
 
     <style name="AppTheme.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:tint">?colorAccent</item>
     </style>
 
@@ -42,9 +43,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/AppTheme.QuoterTextViewStyle</item>
         <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
-        <item name="android:windowBackground">?colorPrimary</item>
+        <item name="android:windowBackground">?colorPrimaryDark</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-
 
 </resources>
