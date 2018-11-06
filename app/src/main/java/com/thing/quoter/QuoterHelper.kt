@@ -4,10 +4,10 @@ import com.thing.quoter.model.Quote
 import java.util.Random
 import kotlin.collections.ArrayList
 
-object QuoteHelper {
+object QuoterHelper {
     private var quotes = ArrayList<Quote>()
     private var randomIndex = Random()
-    var imagesUrl = "http://i.imgur.com/DvpvklR.png"
+    var imagesUrl = "https://source.unsplash.com/random"
     var shouldLoadImage = false
     var stashedQuote: Quote? = null
     private var i = 0

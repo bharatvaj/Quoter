@@ -8,4 +8,5 @@
     <string name="quote_loading">உங்களுக்காக சரியான மேற்கோள்கள் கண்டுபிடி</string>
     <string name="toggle_speaker_hint">" மாற்று பேச்சாளர்"</string>
     <string name="share_text">சேமி</string>
+    <string name="share_btn_hint">பகிர்</string>
 </resources>

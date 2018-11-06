@@ -1,32 +1,28 @@
 package com.thing.quoter
 
-import android.animation.ArgbEvaluator
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.animation.FastOutLinearInInterpolator
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.gunhansancar.changelanguageexample.helper.LocaleHelper
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.thing.quoter.model.Quote
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.footer_section.*
 import kotlinx.android.synthetic.main.header_section.*
 import java.io.ByteArrayOutputStream
 
@@ -35,8 +31,8 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.rootView -> {
-                show(QuoteHelper.getQuote())
+            R.id.imageQuoteContainer -> {
+                show(QuoterHelper.getQuote())
             }
             R.id.themeToggle -> {
                 toggleTheme()
@@ -45,21 +41,28 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
                 //TODO change font app globally
                 toggleFont()
             }
-            R.id.languageSelect -> {
-                LocaleHelper.setLocale(this, "ta")
-                recreate()
+            R.id.providerSelect -> {
+                //QuoterHelper operations, open the selections fragment
             }
             R.id.toggleSpeaker -> {
                 speakerTextView.visibility = if (speakerTextView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
+            R.id.shareBtn -> {
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(imageQuoteContainer)))
+                    type = "image/*"
+                }
+                startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.share_text)))
             }
         }
     }
 
     override fun onLongClick(v: View?): Boolean {
         when (v!!.id) {
-            R.id.rootView -> {
+            R.id.imageQuoteContainer -> {
                 if (!isDark) {
-                    QuoteHelper.shouldLoadImage = true
+                    QuoterHelper.shouldLoadImage = true
                     toggleTheme()
                     return false
                 }
@@ -72,37 +75,31 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         }
     }
 
-    private var objectAnimator: ObjectAnimator? = null
 
     fun indicateLoading(shouldLoad: Boolean, ofBackground: Boolean = true, quote: Quote? = null) {
-        if (objectAnimator == null) {
-            val colorFrom = ContextCompat.getColor(this, R.color.colorPrimary)
-            val colorTo = ContextCompat.getColor(this, R.color.colorPrimaryDark)
-            val dur: Long = 1500
-            objectAnimator = ObjectAnimator.ofObject(rootView, "backgroundColor", ArgbEvaluator(), colorFrom, colorTo).apply {
-                duration = dur
-                repeatMode = ValueAnimator.REVERSE
-                repeatCount = ValueAnimator.INFINITE
-                interpolator = FastOutLinearInInterpolator()
-            }
-        }
         if (shouldLoad) {
-            objectAnimator?.start()
+            if (bg.tag == null) {
+                bg.setImageDrawable(resources.getDrawable(R.drawable.unsplash, theme))
+                bg.tag = ""
+            }
             if (ofBackground) {
+                val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
+                animation.repeatCount = Animation.INFINITE
+                animation.repeatMode = Animation.REVERSE
+                bg.startAnimation(animation)
             } else {
                 if (quote != null) {
                     quoteTextView.text = quote.quote
                     speakerTextView.text = quote.speaker
+                    val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
+                    animation.repeatCount = Animation.INFINITE
+                    animation.repeatMode = Animation.REVERSE
+                    quoteContainer.startAnimation(animation)
                 }
-                var anim = AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
-                anim.repeatCount = Animation.INFINITE
-                anim.repeatMode = Animation.REVERSE
-                quoteContainer.startAnimation(anim)
             }
         } else {
             if (ofBackground) {
-                objectAnimator?.start()
-                objectAnimator?.cancel()
+                bg.clearAnimation()
             } else {
                 quoteContainer.clearAnimation()
             }
@@ -112,22 +109,21 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
     private fun loadImage() {
         indicateLoading(true)
         Picasso.get()
-                .load("https://media.timeout.com/images/101759135/630/472/image.jpg")
-                .resize(420, 300)
-                .centerCrop()
+                .load(QuoterHelper.imagesUrl)
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .noPlaceholder()
                 .into(object : Target {
                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-
                     override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                         indicateLoading(false)
-
                     }
 
                     override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                         indicateLoading(false)
-                        rootView.background = BitmapDrawable(resources, bitmap!!)
+                        bg.setImageBitmap(bitmap)
+                        bg.imageAlpha = 180
                     }
-
                 })
     }
 
@@ -153,7 +149,7 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         val onboardMsgs = resources.getStringArray(R.array.onboard_msgs)
         var i = 0
         show(onboardMsgs[i++], getString(R.string.company_name))
-        rootView.setOnClickListener {
+        imageQuoteContainer.setOnClickListener {
             if (i == onboardMsgs.size) {
                 toggleTheme()
                 isFirstTime = false
@@ -166,9 +162,9 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
     fun getBitmapFromView(view: View): Bitmap {
         var b = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(b)
-        header.visibility = View.GONE
+        menuContainer.visibility = View.GONE
         view.draw(canvas)
-        header.visibility = View.VISIBLE
+        menuContainer.visibility = View.VISIBLE
         return b
     }
 
@@ -202,15 +198,24 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         }
     }
 
-
-    fun share() {
-
-        val shareIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(rootView)))
-            type = "image/*"
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        when (v!!.id) {
+            R.id.providerSelect -> {
+                menu!!.setHeaderTitle("Languages")
+                val l = menu.addSubMenu("English")
+                l.setHeaderTitle("English")
+                l.add("goodreads")
+                val t = menu.addSubMenu("Tamil")
+                t.setHeaderTitle("Tamil")
+                t.add("Tirukural")
+            }
         }
-        startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.share_text)))
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        show("Fun")
+        return super.onContextItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -221,35 +226,38 @@ class MainActivity : AppActivity(), View.OnClickListener, View.OnLongClickListen
         quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.SANS_SERIF
         //
 
+        registerForContextMenu(providerSelect)
+
         if (isFirstTime) {
-            header.visibility = View.GONE
+            menuContainer.visibility = View.GONE
             return onboard()
         } else {
-            show(QuoteHelper.stashedQuote)
+            show(QuoterHelper.stashedQuote)
             //then register click
-            rootView.setOnClickListener(this)
+            imageQuoteContainer.setOnClickListener(this)
             //register long press
-            rootView.setOnLongClickListener(this)
+            imageQuoteContainer.setOnLongClickListener(this)
             //setup share fling
             val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
                 override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
                     if (e1?.y!! - e2?.y!! > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                        share()
+                        //share()
                     }
                     return true
                 }
             })
-            rootView.setOnTouchListener { _, motionEvent ->
+            imageQuoteContainer.setOnTouchListener { _, motionEvent ->
                 gestureDetector.onTouchEvent(motionEvent)
             }
             themeToggle.setOnClickListener(this)
             fontToggle.setOnClickListener(this)
-            languageSelect.setOnClickListener(this)
+            providerSelect.setOnClickListener(this)
             toggleSpeaker.setOnClickListener(this)
+            shareBtn.setOnClickListener(this)
         }
-        if (QuoteHelper.shouldLoadImage) {
+        if (QuoterHelper.shouldLoadImage) {
             loadImage()
-            QuoteHelper.shouldLoadImage = false
+            QuoterHelper.shouldLoadImage = false
         }
     }
 }
