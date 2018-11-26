@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.transition.Fade
-import android.transition.Slide
 import android.view.*
 import android.view.animation.AnimationUtils
 import com.squareup.picasso.MemoryPolicy
@@ -16,6 +15,7 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.thing.quoter.fragment.CustomizeFragment
 import com.thing.quoter.fragment.ProviderSelectFragment
+import com.thing.quoter.helper.QuoterHelper
 import com.thing.quoter.model.Quote
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*

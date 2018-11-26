@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/themeToggle"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/theme_toggle_hint"
+            android:src="@drawable/ic_color_palette" />
+
+        <ImageButton
+            android:id="@+id/backgroundChange"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/theme_toggle_hint"
+            android:src="@drawable/ic_paint_roller" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/backgroundRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

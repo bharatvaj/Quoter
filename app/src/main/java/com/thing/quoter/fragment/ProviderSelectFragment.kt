@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.thing.quoter.QuoterHelper
+import com.thing.quoter.helper.QuoterHelper
 
 import com.thing.quoter.R
 import com.thing.quoter.adapter.ProviderViewAdapter

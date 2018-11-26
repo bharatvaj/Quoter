@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<ImageButton-->
+    <!--android:id="@+id/fontToggle"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="@android:dimen/app_icon_size"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_text"-->
+    <!--android:layout_marginStart="@dimen/horizontal_margin"-->
+    <!--android:contentDescription="@string/font_toggle_hint"-->
+    <!--android:visibility="gone"/>-->
+    <ImageButton
+        android:id="@+id/toggleSpeaker"
+        android:layout_width="match_parent"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:contentDescription="@string/toggle_speaker_hint"
+        android:src="@drawable/ic_author_sign" />
+</LinearLayout>

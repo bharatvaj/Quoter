@@ -6,10 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.thing.quoter.helper.QuoterHelper
 
 import com.thing.quoter.R
-import kotlinx.android.synthetic.main.fragment_customize.*
-
+import kotlinx.android.synthetic.main.customize_background.*
+import kotlinx.android.synthetic.main.customize_text.*
 
 class CustomizeFragment : Fragment(), View.OnClickListener {
 
@@ -27,6 +28,9 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
         //fontToggle.setOnClickListener(this)
         toggleSpeaker.setOnClickListener(this)
         backgroundChange.setOnClickListener(this)
+
+        //generate 10 urls
+        QuoterHelper.getRandomBgUrl()
     }
 
     override fun onClick(view: View) {
