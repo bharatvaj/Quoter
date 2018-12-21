@@ -35,7 +35,7 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun notifyBackgroundList(messageEvent: QuoterHelper.MessageEvent) {
-        adapter?.notifyDataSetChanged()
+        adapter?.notifyItemInserted(adapter?.itemCount!!)
     }
 
     override fun onStart() {

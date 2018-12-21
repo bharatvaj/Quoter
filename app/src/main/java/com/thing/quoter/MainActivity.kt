@@ -28,22 +28,21 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
                 toggleTheme()
             }
             R.id.toggleFont -> {
+                QuoterHelper.shouldLoadImage = true //FIXME remove
                 toggleFont()
             }
             CustomizeFragment.BACKGROUND_IMAGE -> {
                 if (extraStr == null) {
                     return
                 }
+                QuoterHelper.stashedImage = extraStr
                 if (!isDark) {
                     QuoterHelper.shouldLoadImage = true
-                    QuoterHelper.stashedImage = extraStr
                     toggleTheme()
                     return
                 }
                 Picasso.get().load(extraStr).into(bg)
-                return
             }
-
             R.id.toggleSpeaker -> {
                 authorTextView.visibility = if (authorTextView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
@@ -117,7 +116,7 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
         theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
         setContentView(R.layout.activity_main)
         //
-        quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.DEFAULT
+        quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.MONOSPACE
         //
 
         if (isFirstTime) {
