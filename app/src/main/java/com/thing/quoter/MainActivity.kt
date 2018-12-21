@@ -1,19 +1,13 @@
 package com.thing.quoter
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.transition.Fade
-import android.transition.Slide
 import android.view.*
 import android.view.animation.AnimationUtils
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import com.thing.quoter.fragment.CustomizeFragment
 import com.thing.quoter.fragment.ProviderSelectFragment
 import com.thing.quoter.model.Quote
@@ -28,25 +22,30 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
         //get provider from QuoteHelper
     }
 
-    override fun onCustomize(viewId: Int) {
+    override fun onCustomize(viewId: Int, extraStr: String?) {
         when (viewId) {
-            R.id.themeToggle -> {
+            R.id.colorChange -> {
                 toggleTheme()
             }
-//            R.id.fontToggle -> {
-//                //TODO change font app globally
-//                toggleFont()
-//            }
+            R.id.toggleFont -> {
+                toggleFont()
+            }
+            CustomizeFragment.BACKGROUND_IMAGE -> {
+                if (extraStr == null) {
+                    return
+                }
+                if (!isDark) {
+                    QuoterHelper.shouldLoadImage = true
+                    QuoterHelper.stashedImage = extraStr
+                    toggleTheme()
+                    return
+                }
+                Picasso.get().load(extraStr).into(bg)
+                return
+            }
 
             R.id.toggleSpeaker -> {
                 authorTextView.visibility = if (authorTextView.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-            }
-            R.id.backgroundChange -> {
-                if (!isDark) {
-                    QuoterHelper.shouldLoadImage = true
-                    toggleTheme()
-                }
-                loadImage()
             }
         }
     }
@@ -89,35 +88,6 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
         }
     }
 
-
-    fun shouldLoad(load: Boolean) {
-        progressBar.isIndeterminate = load
-        progressBar.visibility = if (load) View.VISIBLE else View.INVISIBLE
-    }
-
-
-    private fun loadImage() {
-        shouldLoad(true)
-        Picasso.get()
-                .load(QuoterHelper.imagesUrl)
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .noPlaceholder()
-                .into(object : Target {
-                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-                    override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                        shouldLoad(false)
-                    }
-
-                    override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                        shouldLoad(false)
-                        bg.setImageBitmap(bitmap)
-                        bg.imageAlpha = 180
-                    }
-                })
-    }
-
-
     override fun show(quote: Quote?) {
         if (quote == null) return show(resources.getString(R.string.quote_loading))
         quoteContainer.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in).apply {
@@ -147,7 +117,7 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
         theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
         setContentView(R.layout.activity_main)
         //
-        quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.SANS_SERIF
+        quoteTextView.typeface = if (isFontSerif) Typeface.SERIF else Typeface.DEFAULT
         //
 
         if (isFirstTime) {
@@ -162,7 +132,7 @@ class MainActivity : AppActivity(), View.OnClickListener, CustomizeFragment.OnCu
             shareBtn.setOnClickListener(this)
         }
         if (QuoterHelper.shouldLoadImage) {
-            loadImage()
+            onCustomize(CustomizeFragment.BACKGROUND_IMAGE, QuoterHelper.stashedImage)
             QuoterHelper.shouldLoadImage = false
         }
     }

@@ -3,15 +3,27 @@ package com.thing.quoter.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.thing.quoter.QuoterHelper
 
 import com.thing.quoter.R
-import kotlinx.android.synthetic.main.fragment_customize.*
-
+import com.thing.quoter.adapter.BackgroundPreviewViewAdapter
+import kotlinx.android.synthetic.main.customize_background.*
+import kotlinx.android.synthetic.main.customize_text.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class CustomizeFragment : Fragment(), View.OnClickListener {
+
+    companion object {
+        const val BACKGROUND_IMAGE = 1
+    }
+
+    var adapter: BackgroundPreviewViewAdapter? = null
 
     private var listener: OnCustomizeListener? = null
 
@@ -21,12 +33,36 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
         return inflater.inflate(R.layout.fragment_customize, container, false)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun notifyBackgroundList(messageEvent: QuoterHelper.MessageEvent) {
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        themeToggle.setOnClickListener(this)
-        //fontToggle.setOnClickListener(this)
-        toggleSpeaker.setOnClickListener(this)
+        colorChange.setOnClickListener(this)
         backgroundChange.setOnClickListener(this)
+        userBgChange.setOnClickListener(this)
+
+        toggleFont.setOnClickListener(this)
+        toggleSpeaker.setOnClickListener(this)
+
+        adapter = BackgroundPreviewViewAdapter(context!!, QuoterHelper.backgrounds)
+        backgroundPreviewRecyclerView.adapter = adapter
+        backgroundPreviewRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        adapter?.listener = fun(str: String) {
+            listener?.onCustomize(BACKGROUND_IMAGE, str)
+        }
     }
 
     override fun onClick(view: View) {
@@ -48,6 +84,6 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
     }
 
     interface OnCustomizeListener {
-        fun onCustomize(viewId: Int)
+        fun onCustomize(viewId: Int, extraStr: String? = null)
     }
 }

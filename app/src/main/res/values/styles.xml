@@ -9,6 +9,11 @@
         <item name="android:shadowColor">?colorPrimaryDark</item>
     </style>
 
+    <style name="AppTheme.LightTextViewStyle" parent="Base.TextAppearance.AppCompat.Caption">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="AppTheme.QuoteTextViewStyle" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">@dimen/quote_text_size</item>
         <item name="android:fontFamily">serif</item>

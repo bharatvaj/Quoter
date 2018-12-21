@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/backgroundPreview"
+    android:layout_width="@dimen/background_preview_size"
+    android:layout_height="@dimen/background_preview_size"
+    android:layout_marginLeft="@dimen/margin_small"
+    android:scaleType="centerCrop" />

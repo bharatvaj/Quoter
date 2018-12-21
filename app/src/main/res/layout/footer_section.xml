@@ -21,12 +21,4 @@
             android:contentDescription="@string/theme_toggle_hint"
             android:src="@drawable/ic_share_button" />
     </LinearLayout>
-
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
 </LinearLayout>
