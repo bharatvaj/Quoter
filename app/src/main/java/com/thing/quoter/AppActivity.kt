@@ -22,7 +22,6 @@ abstract class AppActivity : AppCompatActivity() {
 
     var isFirstTime = true
     var isDark = false
-    var isFontSerif = true
 
 
     companion object {
@@ -34,12 +33,6 @@ abstract class AppActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase))
-    }
-
-    abstract fun show(quote: Quote?)
-
-    fun show(message: String, speaker: String = getString(R.string.app_name)) {
-        show(Quote(message, speaker))
     }
 
     fun getBitmapFromView(view: View): Bitmap {
@@ -65,7 +58,7 @@ abstract class AppActivity : AppCompatActivity() {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
 
                 } else {
-                    show("Cannot save until you give permissions")
+//                    TODO show("Cannot save until you give permissions")
                 }
                 return
             }
@@ -84,7 +77,6 @@ abstract class AppActivity : AppCompatActivity() {
             val preferences = getSharedPreferences(getString(R.string.settings_pref_file), Context.MODE_PRIVATE)
             isFirstTime = preferences.getBoolean(getString(R.string.settings_isFirstTime), true)
             isDark = preferences.getBoolean(getString(R.string.settings_isDark), true)
-            isFontSerif = preferences.getBoolean(getString(R.string.settings_isFontSerif), true)
 
             // Here, thisActivity is the current activity
             if (ContextCompat.checkSelfPermission(this,
@@ -120,17 +112,11 @@ abstract class AppActivity : AppCompatActivity() {
         recreate()
     }
 
-    fun toggleFont() {
-        isFontSerif = !isFontSerif
-        recreate()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         val editor = getSharedPreferences(getString(R.string.settings_pref_file), Context.MODE_PRIVATE).edit()
         editor.putBoolean(getString(R.string.settings_isFirstTime), isFirstTime)
         editor.putBoolean(getString(R.string.settings_isDark), isDark)
-        editor.putBoolean(getString(R.string.settings_isFontSerif), isFontSerif)
         editor.apply()
     }
 }

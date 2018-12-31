@@ -9,7 +9,7 @@
         <item name="android:shadowColor">?colorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.LightTextViewStyle" parent="Base.TextAppearance.AppCompat.Body2">
+    <style name="AppTheme.LightTextViewStyle" parent="Base.TextAppearance.AppCompat.Body1">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textAllCaps">true</item>
     </style>

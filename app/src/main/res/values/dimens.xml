@@ -11,5 +11,6 @@
 
     <dimen name="image_small">64dp</dimen>
 
-    <dimen name="background_preview_size">108dp</dimen>
+    <dimen name="bg_preview_size">108dp</dimen>
+    <dimen name="bg_preview_corner_radius">4dp</dimen>
 </resources>

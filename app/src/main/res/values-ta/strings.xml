@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">மேற்கோள்</string>
-    <string name="speaker_unknown">பெயர் தெரியாத</string>
+    <string name="author_unknown">பெயர் தெரியாத</string>
     <string name="theme_toggle_hint">மாற்று ஒளி</string>
     <string name="font_toggle_hint">மாற்று எழுத்துரு</string>
     <string name="language_select_hint">மொழி தேர்வு</string>

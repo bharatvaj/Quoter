@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Quoter</string>
     <string name="company_name" translatable="false">Thing Studio</string>
-    <string name="speaker_unknown">Unknown</string>
+    <string name="author_unknown">Unknown</string>
     <string name="quote_loading">Finding the right quotes for you</string>
 
 
     <string-array name="onboard_msgs">
-        <item>Welcome to quoter! tap to continue</item>
+        <item>Welcome to quoter! swipe to continue</item>
         <item>Tap share button to share the current quote</item>
         <item>You are all set! Thanks for using this app</item>
     </string-array>
@@ -19,5 +19,12 @@
     <string name="share_btn_hint">Share Quote</string>
 
     <string name="share_text">Save as</string>
+    <string name="preview_string" translatable="false">Preview ABC</string>
+
+    <string-array name="font_list">
+        <item>normal</item>
+        <item>serif</item>
+        <item>monospace</item>
+    </string-array>
 
 </resources>

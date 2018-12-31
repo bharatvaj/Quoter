@@ -4,20 +4,32 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.transition.Fade
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.SpinnerAdapter
 import com.thing.quoter.QuoterHelper
 
 import com.thing.quoter.R
 import com.thing.quoter.adapter.BackgroundPreviewViewAdapter
+import com.thing.quoter.model.Quote
 import kotlinx.android.synthetic.main.customize_background.*
 import kotlinx.android.synthetic.main.customize_text.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class CustomizeFragment : Fragment(), View.OnClickListener {
+class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        listener?.onCustomize(R.id.fontSpinner, context!!.resources.getStringArray(R.array.font_list)[position])
+    }
 
     companion object {
         const val BACKGROUND_IMAGE = 1
@@ -54,7 +66,7 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
         backgroundChange.setOnClickListener(this)
         userBgChange.setOnClickListener(this)
 
-        toggleFont.setOnClickListener(this)
+//        toggleFont.setOnClickListener(this)
         toggleSpeaker.setOnClickListener(this)
 
         adapter = BackgroundPreviewViewAdapter(context!!, QuoterHelper.backgrounds)
@@ -63,6 +75,28 @@ class CustomizeFragment : Fragment(), View.OnClickListener {
         adapter?.listener = fun(str: String) {
             listener?.onCustomize(BACKGROUND_IMAGE, str)
         }
+
+        var dqf = DisplayQuoteFragment()
+        fragmentManager?.beginTransaction()
+                ?.replace(R.id.textPreviewFrameLayout, dqf)
+                ?.runOnCommit {
+                    dqf.show(getString(R.string.preview_string))
+                }?.commit()
+
+
+
+        ArrayAdapter.createFromResource(
+                context,
+                R.array.font_list,
+                android.R.layout.simple_spinner_item
+        ).also { a ->
+            // Specify the layout to use when the list of choices appears
+            a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            fontSpinner.adapter = a
+        }
+        fontSpinner.onItemSelectedListener = this
+        fontSizeSpinner.onItemSelectedListener = this
     }
 
     override fun onClick(view: View) {

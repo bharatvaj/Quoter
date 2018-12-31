@@ -1,9 +1,11 @@
 package com.thing.quoter
 
+import android.support.v4.util.CircularArray
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thing.quoter.model.Quote
 import com.thing.quoter.model.QuoteProvider
+import com.thing.quoter.model.QuoteSetting
 import org.greenrobot.eventbus.EventBus
 import java.lang.NullPointerException
 import java.net.HttpURLConnection
@@ -11,25 +13,26 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.collections.LinkedHashSet
 import kotlin.concurrent.thread
 
 object QuoterHelper {
-    private var quotesRef: CollectionReference = FirebaseFirestore.getInstance().collection("quotes")
+
     private var quoteProvidersRef: CollectionReference = FirebaseFirestore.getInstance().collection("quoteProvider")
-    private var quotes = FirestoreList(Quote::class.java, quotesRef)
     var quoteProviders = FirestoreList(QuoteProvider::class.java, quoteProvidersRef)
+
     var backgrounds = LinkedHashSet<String>()
-    private var randomIndex = Random()
 
     private const val TAG = "QuoterHelper"
 
-    private var quoteList = ArrayList<Quote>()
 
     var imagesUrl = "https://source.unsplash.com/random"
-    var shouldLoadImage = false
-    var stashedQuote: Quote? = null
-    var stashedImage: String? = null
+
+
+
+
     private var i = 0
 
     init {
@@ -41,6 +44,7 @@ object QuoterHelper {
                 resolveImageUrls(imagesUrl)
             }
         }
+        //FIXME
     }
 
     class MessageEvent /* Additional fields if needed */
@@ -62,11 +66,5 @@ object QuoterHelper {
         } catch (mue: MalformedURLException) {
             //no-op
         }
-    }
-
-
-    fun getQuote(): Quote? {
-        stashedQuote = if (quotes.isEmpty) null else quotes.keyAt(i++ % quotes.size)
-        return stashedQuote
     }
 }
