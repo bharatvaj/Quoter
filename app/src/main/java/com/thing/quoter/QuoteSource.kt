@@ -12,37 +12,44 @@ class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>?
     var firestoreQuotes = FirestoreList(Quote::class.java, quotesRef)
     ///////////////////////////////////////////
     var quotes = ArrayList<Quote>()
-    var index: Int = 0
-    var onLoadedListener: ((Quote) -> Unit)? = null
+    var index: Int = -1
+    var onStartReachedListener: ((Quote) -> Unit)? = null
+    var onEndReachedListener: ((Quote) -> Unit)? = null
 
     fun populate() {
         if (extra != null) {
             for (quote in extra!!) {
                 quotes.add(quote)
             }
-            onLoadedListener?.invoke(extra!!.first())
+            onStartReachedListener?.invoke(extra!!.first())
             index++
             return
         }
         var isFirst = true
+
         //FIXME Read from JSONQuoteMapper class
         firestoreQuotes.setOnAddListener { _, quote ->
             if (isFirst) {
-                onLoadedListener?.invoke(quote)
+                onStartReachedListener?.invoke(quote)
                 index++
             }
             quotes.add(quote)
             isFirst = false
         }
+        //////////////////////////////////////////////////////////////
     }
 
     fun getNextQuote(): Quote? {
-        return if (quotes.size == 0 || index == quotes.size) null
-        else quotes[index++]
+        if (quotes.size == 0) return null
+        index++
+        if (quotes.size - 1 == index) onEndReachedListener?.invoke(quotes[quotes.size - 1])
+        return quotes[index]
     }
 
     fun getPreviousQuote(): Quote? {
-        return if (quotes.size == 0 || index == -1) null
-        else quotes[index--]
+        if (quotes.size == 0) return null
+        index--
+        if (index == 0) onStartReachedListener?.invoke(quotes[0])
+        return quotes[index]
     }
 }

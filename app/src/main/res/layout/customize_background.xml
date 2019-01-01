@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
-        android:text="Background" />
+        android:text="@string/background_hdr" />
 
     <LinearLayout
         android:layout_width="match_parent"

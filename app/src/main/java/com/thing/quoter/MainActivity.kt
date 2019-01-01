@@ -1,5 +1,6 @@
 package com.thing.quoter
 
+import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
 import android.view.*
@@ -17,6 +18,8 @@ class MainActivity : AppActivity(), View.OnClickListener,
         CustomizeFragment.OnCustomizeListener,
         ProviderSelectFragment.OnProviderChangedListener,
         View.OnLongClickListener {
+
+    val dqf: DisplayQuoteFragment = DisplayQuoteFragment()
 
     override fun onLongClick(v: View?): Boolean {
         return false
@@ -45,10 +48,11 @@ class MainActivity : AppActivity(), View.OnClickListener,
                 if (extraStr == null) {
                     return
                 }
-                //
+                if (dqf.isVisible) {
+                    dqf.loadSetting(dqf.getSetting().apply { fontFamily = extraStr })
+                }
             }
             R.id.fontSizeSpinner -> {
-
             }
             R.id.quoteContainer -> {
 
@@ -80,15 +84,23 @@ class MainActivity : AppActivity(), View.OnClickListener,
                         })
                         .commit()
             }
-//            R.id.shareBtn -> {
-//                val shareIntent: Intent = Intent().apply {
-//                    action = Intent.ACTION_SEND
-//                    putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(imageQuoteContainer)))
-//                    type = "image/*"
-//                }
-//                startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.share_text)))
-//            }
+            R.id.shareBtn -> {
+                showMenu(false)
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(rootView)))
+                    type = "image/*"
+                }
+                showMenu(true)
+                startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.share_text)))
+            }
         }
+    }
+
+    fun showMenu(b: Boolean) {
+        var v = if (b) View.VISIBLE else View.GONE
+        menuContainer.visibility = v
+        navBar.visibility = v
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +108,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
         theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
         setContentView(R.layout.activity_main)
 
-        val dqf: DisplayQuoteFragment = DisplayQuoteFragment()
         var quoteSource: QuoteSource? = null
 
         supportFragmentManager
@@ -105,46 +116,45 @@ class MainActivity : AppActivity(), View.OnClickListener,
                 .runOnCommit {
                     if (isFirstTime) {
                         menuContainer.visibility = View.GONE
-                        var quotes = ArrayList<Quote>()
+                        val quotes = ArrayList<Quote>()
                         for (quoteMsg in resources.getStringArray(R.array.onboard_msgs)) {
                             quotes.add(Quote(quoteMsg, getString(R.string.company_name)))
                         }
                         quoteSource = QuoteSource(QuoteProvider(), quotes).apply {
-                            onLoadedListener = {
-                                dqf.show(it)
+                            onEndReachedListener = {
+                                isFirstTime = false
+                                recreate()
                             }
                         }
-
-                        quoteSource?.populate()
-                        return@runOnCommit
                     } else {
-                        quoteSource = QuoteSource(QuoteProvider()).apply {
-                            onLoadedListener = {
-                                dqf.show(it)
-                            }
-                        }
+                        quoteSource = QuoteSource(QuoteProvider())
                         //then register click
                         providerSelect.setOnClickListener(this)
                         customizeSelect.setOnClickListener(this)
                         shareBtn.setOnClickListener(this)
 
-                        quoteSource?.populate()
+                        quoteSource?.onEndReachedListener = {
+                            dqf.show(it)
+                            rightNavBtn.visibility = View.GONE
+                            leftNavBtn.visibility = View.VISIBLE
+                        }
                     }
+                    //assing callbacks
                     leftNavBtn.setOnClickListener {
-                        var quote = quoteSource?.getPreviousQuote()
-                        if (quoteSource == null) {
-                            if (isFirstTime) {
-                                isFirstTime = false
-                                recreate()
-                            }
-                        } else dqf.show(quote)
+                        dqf.show(quoteSource?.getPreviousQuote())
+                        rightNavBtn.visibility = View.VISIBLE
                     }
                     rightNavBtn.setOnClickListener {
-                        var quote = quoteSource?.getNextQuote()
-                        if (quoteSource == null) {
-                            //reached end
-                        } else dqf.show(quote)
+                        dqf.show(quoteSource?.getNextQuote())
+                        leftNavBtn.visibility = View.VISIBLE
                     }
+                    quoteSource?.onStartReachedListener = {
+                        dqf.show(it)
+                        leftNavBtn.visibility = View.GONE
+                        rightNavBtn.visibility = View.VISIBLE
+                    }
+                    //populate
+                    quoteSource?.populate()
                 }
                 .commit()
     }

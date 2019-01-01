@@ -20,10 +20,11 @@
 
     <string name="share_text">Save as</string>
     <string name="preview_string" translatable="false">Preview ABC</string>
+    <string name="background_hdr">Background</string>
 
     <string-array name="font_list">
-        <item>normal</item>
         <item>serif</item>
+        <item>sans-serif</item>
         <item>monospace</item>
     </string-array>
 

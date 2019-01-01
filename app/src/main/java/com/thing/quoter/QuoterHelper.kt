@@ -27,18 +27,13 @@ object QuoterHelper {
 
     private const val TAG = "QuoterHelper"
 
-
     var imagesUrl = "https://source.unsplash.com/random"
-
-
-
 
     private var i = 0
 
     init {
         //TODO remove
-//        backgrounds.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgTDOzadSH7HZlU96Ogy2XzMynwk4o4Epcvw12FmpBYRT0B_aLrA")
-        //populate background resources into backgrounds arraylist
+        backgrounds.add("black")
         thread {
             for (i in 1..30) { //FIXME resolve only on scroll
                 resolveImageUrls(imagesUrl)

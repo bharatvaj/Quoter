@@ -76,7 +76,7 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             listener?.onCustomize(BACKGROUND_IMAGE, str)
         }
 
-        var dqf = DisplayQuoteFragment()
+        val dqf = DisplayQuoteFragment()
         fragmentManager?.beginTransaction()
                 ?.replace(R.id.textPreviewFrameLayout, dqf)
                 ?.runOnCommit {
@@ -86,7 +86,7 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
 
         ArrayAdapter.createFromResource(
-                context,
+                context!!,
                 R.array.font_list,
                 android.R.layout.simple_spinner_item
         ).also { a ->

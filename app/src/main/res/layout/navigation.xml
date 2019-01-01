@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:showIn="@layout/activity_main">
@@ -11,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
-        android:src="@drawable/ic_left_chevron" />
+        android:src="@drawable/ic_left_chevron"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/rightNavBtn"
@@ -19,5 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:src="@drawable/ic_right_chevron" />
+        android:src="@drawable/ic_right_chevron"
+        android:visibility="gone" />
 </RelativeLayout>

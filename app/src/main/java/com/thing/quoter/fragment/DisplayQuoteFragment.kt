@@ -51,7 +51,8 @@ class DisplayQuoteFragment : Fragment(), View.OnLongClickListener {
     }
 
     fun loadSetting(quoteSetting: QuoteSetting) {
-        quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF else Typeface.MONOSPACE //FIXME Too much information hard coded
+        quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF
+        else if (quoteSetting.fontFamily == "monospace") Typeface.MONOSPACE else Typeface.SANS_SERIF //FIXME Too much information hard coded
     }
 
     fun getSetting(): QuoteSetting {

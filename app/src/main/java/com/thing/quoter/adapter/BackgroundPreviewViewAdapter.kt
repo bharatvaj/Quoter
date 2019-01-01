@@ -1,6 +1,7 @@
 package com.thing.quoter.adapter
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,7 @@ class BackgroundPreviewViewAdapter(val context: Context, val backgrounds: Set<St
             Picasso.get()
                     .load(backgroundRes)
                     .placeholder(R.drawable.bg_preview_item_placeholder)
+                    .error(android.R.color.black)
                     .into(backgroundPreviewImageView)
         }
     }
