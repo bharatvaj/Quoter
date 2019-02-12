@@ -41,6 +41,7 @@ class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>?
 
     fun getNextQuote(): Quote? {
         if (quotes.size == 0) return null
+        if (index + 1> quotes.size - 1) return null
         index++
         if (quotes.size - 1 == index) onEndReachedListener?.invoke(quotes[quotes.size - 1])
         return quotes[index]
@@ -48,6 +49,7 @@ class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>?
 
     fun getPreviousQuote(): Quote? {
         if (quotes.size == 0) return null
+        if (index - 1 < 0) return null
         index--
         if (index == 0) onStartReachedListener?.invoke(quotes[0])
         return quotes[index]

@@ -20,6 +20,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
         View.OnLongClickListener {
 
     val dqf: DisplayQuoteFragment = DisplayQuoteFragment()
+    var quoteSource: QuoteSource? = null
 
     override fun onLongClick(v: View?): Boolean {
         return false
@@ -53,9 +54,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
                 }
             }
             R.id.fontSizeSpinner -> {
-            }
-            R.id.quoteContainer -> {
-
             }
         }
     }
@@ -98,17 +96,33 @@ class MainActivity : AppActivity(), View.OnClickListener,
     }
 
     fun showMenu(b: Boolean) {
-        var v = if (b) View.VISIBLE else View.GONE
+        val v = if (b) View.VISIBLE else View.GONE
         menuContainer.visibility = v
         navBar.visibility = v
     }
 
+    fun navLeft() {
+        val quote = quoteSource?.getPreviousQuote()
+        if (quote == null)
+            return
+        dqf.show(quote)
+        rightNavBtn.visibility = View.VISIBLE
+    }
+
+    fun navRight() {
+        val quote = quoteSource?.getNextQuote()
+        if (quote == null)
+            return
+        dqf.show(quote)
+        leftNavBtn.visibility = View.VISIBLE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        theme.applyStyle(if (isDark) R.style.AppTheme else R.style.AppTheme_Light, true)
+        if (isFirstTime) {
+            theme.applyStyle(R.style.AppTheme_Light, true)
+        }
         setContentView(R.layout.activity_main)
-
-        var quoteSource: QuoteSource? = null
 
         supportFragmentManager
                 .beginTransaction()
@@ -132,6 +146,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
                         providerSelect.setOnClickListener(this)
                         customizeSelect.setOnClickListener(this)
                         shareBtn.setOnClickListener(this)
+                        mainFrameLayout.setOnClickListener(this)
 
                         quoteSource?.onEndReachedListener = {
                             dqf.show(it)
@@ -139,14 +154,12 @@ class MainActivity : AppActivity(), View.OnClickListener,
                             leftNavBtn.visibility = View.VISIBLE
                         }
                     }
-                    //assing callbacks
+                    //assigning callbacks
                     leftNavBtn.setOnClickListener {
-                        dqf.show(quoteSource?.getPreviousQuote())
-                        rightNavBtn.visibility = View.VISIBLE
+                        navLeft()
                     }
                     rightNavBtn.setOnClickListener {
-                        dqf.show(quoteSource?.getNextQuote())
-                        leftNavBtn.visibility = View.VISIBLE
+                        navRight()
                     }
                     quoteSource?.onStartReachedListener = {
                         dqf.show(it)
@@ -157,5 +170,18 @@ class MainActivity : AppActivity(), View.OnClickListener,
                     quoteSource?.populate()
                 }
                 .commit()
+        mainFrameLayout.setOnTouchListener(object : OnSwipeTouchListener(this) {
+            override fun onClick() {
+                supportFragmentManager.popBackStack()
+            }
+
+            override fun onSwipeLeft() {
+                this@MainActivity.navRight()
+            }
+
+            override fun onSwipeRight() {
+                this@MainActivity.navLeft()
+            }
+        })
     }
 }

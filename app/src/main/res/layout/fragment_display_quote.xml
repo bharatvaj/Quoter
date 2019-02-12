@@ -12,7 +12,6 @@
     tools:context=".fragment.DisplayQuoteFragment">
 
     <TextView
-        android:clickable="false"
         android:id="@+id/quoteTextView"
         style="@style/AppTheme.QuoteTextViewStyle"
         android:layout_width="match_parent"
@@ -20,7 +19,6 @@
         android:gravity="center" />
 
     <TextView
-        android:clickable="false"
         android:id="@+id/authorTextView"
         style="@style/AppTheme.SpeakerTextViewStyle"
         android:layout_width="match_parent"

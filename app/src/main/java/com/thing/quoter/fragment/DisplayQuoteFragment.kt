@@ -47,7 +47,7 @@ class DisplayQuoteFragment : Fragment(), View.OnLongClickListener {
         super.onViewCreated(view, savedInstanceState)
         show(null)
 //        authorTextView.text = if (quote!!.author.isEmpty()) context!!.getString(R.string.author_unknown) else quote!!.author //FIXME HAVE TO IMPLEMENT THIS LATER
-        quoteTextView.setOnLongClickListener(this)
+//        quoteTextView.setOnLongClickListener(this)
     }
 
     fun loadSetting(quoteSetting: QuoteSetting) {

@@ -6,7 +6,7 @@
 
 
     <string-array name="onboard_msgs">
-        <item>Welcome to quoter! swipe to continue</item>
+        <item>Welcome to quoter! swipe or use the arrow to continue</item>
         <item>Tap share button to share the current quote</item>
         <item>You are all set! Thanks for using this app</item>
     </string-array>
