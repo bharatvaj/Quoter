@@ -1,6 +1,5 @@
 package com.thing.quoter
 
-import android.support.v4.util.CircularArray
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.thing.quoter.model.Quote
@@ -11,10 +10,6 @@ import java.lang.NullPointerException
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
 import kotlin.collections.LinkedHashSet
 import kotlin.concurrent.thread
 
@@ -22,6 +17,7 @@ object QuoterHelper {
 
     private var quoteProvidersRef: CollectionReference = FirebaseFirestore.getInstance().collection("quoteProvider")
     var quoteProviders = FirestoreList(QuoteProvider::class.java, quoteProvidersRef)
+    var quoteSetting: QuoteSetting? = null
 
     var backgrounds = LinkedHashSet<String>()
 
@@ -42,20 +38,20 @@ object QuoterHelper {
         //FIXME
     }
 
-    class MessageEvent /* Additional fields if needed */
+    class BackgroundUpdateEvent
 
     /*
            * Resolve urls and stash into background
            */
     private fun resolveImageUrls(backgroundUrlApi: String) {
         try {
-            var url = URL(backgroundUrlApi)
-            var ucon = url.openConnection() as HttpURLConnection
+            val url = URL(backgroundUrlApi)
+            val ucon = url.openConnection() as HttpURLConnection
             ucon.setInstanceFollowRedirects(false)
-            var secondURL: URL? = URL(ucon.getHeaderField("Location"))
+            val secondURL: URL? = URL(ucon.getHeaderField("Location"))
             backgrounds.add(secondURL.toString())
             //FIXME call event only if  add succeeds
-            EventBus.getDefault().post(MessageEvent())
+            EventBus.getDefault().post(BackgroundUpdateEvent())
         } catch (npe: NullPointerException) {
             //no-op
         } catch (mue: MalformedURLException) {

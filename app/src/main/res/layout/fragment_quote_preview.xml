@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:clickable="false"
     android:padding="@dimen/margin_medium"
-    tools:context=".fragment.DisplayQuoteFragment">
+    tools:context=".fragment.QuotePreviewFragment">
 
     <TextView
         android:id="@+id/quoteTextView"

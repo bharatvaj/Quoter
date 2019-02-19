@@ -6,10 +6,11 @@ import android.transition.Fade
 import android.view.*
 import com.squareup.picasso.Picasso
 import com.thing.quoter.fragment.CustomizeFragment
-import com.thing.quoter.fragment.DisplayQuoteFragment
+import com.thing.quoter.fragment.QuotePreviewFragment
 import com.thing.quoter.fragment.ProviderSelectFragment
 import com.thing.quoter.model.Quote
 import com.thing.quoter.model.QuoteProvider
+import com.thing.quoter.model.QuoteSetting
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -17,9 +18,14 @@ import kotlinx.android.synthetic.main.toolbar.*
 class MainActivity : AppActivity(), View.OnClickListener,
         CustomizeFragment.OnCustomizeListener,
         ProviderSelectFragment.OnProviderChangedListener,
+        CustomizeFragment.OnTextCustomizeListener,
         View.OnLongClickListener {
 
-    val dqf: DisplayQuoteFragment = DisplayQuoteFragment()
+    override fun onTextCustomize(quoteSetting: QuoteSetting) {
+        qpf.loadSetting(quoteSetting)
+    }
+
+    val qpf: QuotePreviewFragment = QuotePreviewFragment()
     var quoteSource: QuoteSource? = null
 
     override fun onLongClick(v: View?): Boolean {
@@ -44,16 +50,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
                     return
                 }
                 Picasso.get().load(extraStr).into(bg)
-            }
-            R.id.fontSpinner -> {
-                if (extraStr == null) {
-                    return
-                }
-                if (dqf.isVisible) {
-                    dqf.loadSetting(dqf.getSetting().apply { fontFamily = extraStr })
-                }
-            }
-            R.id.fontSizeSpinner -> {
             }
         }
     }
@@ -101,21 +97,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
         navBar.visibility = v
     }
 
-    fun navLeft() {
-        val quote = quoteSource?.getPreviousQuote()
-        if (quote == null)
-            return
-        dqf.show(quote)
-        rightNavBtn.visibility = View.VISIBLE
-    }
-
-    fun navRight() {
-        val quote = quoteSource?.getNextQuote()
-        if (quote == null)
-            return
-        dqf.show(quote)
-        leftNavBtn.visibility = View.VISIBLE
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,9 +105,11 @@ class MainActivity : AppActivity(), View.OnClickListener,
         }
         setContentView(R.layout.activity_main)
 
+        QuoterHelper.quoteSetting = QuoteSetting()
+
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.mainFrameLayout, dqf)
+                .replace(R.id.mainFrameLayout, qpf)
                 .runOnCommit {
                     if (isFirstTime) {
                         menuContainer.visibility = View.GONE
@@ -149,7 +132,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
                         mainFrameLayout.setOnClickListener(this)
 
                         quoteSource?.onEndReachedListener = {
-                            dqf.show(it)
+                            qpf.show(it)
                             rightNavBtn.visibility = View.GONE
                             leftNavBtn.visibility = View.VISIBLE
                         }
@@ -162,7 +145,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
                         navRight()
                     }
                     quoteSource?.onStartReachedListener = {
-                        dqf.show(it)
+                        qpf.show(it)
                         leftNavBtn.visibility = View.GONE
                         rightNavBtn.visibility = View.VISIBLE
                     }
@@ -184,4 +167,21 @@ class MainActivity : AppActivity(), View.OnClickListener,
             }
         })
     }
+
+    fun navLeft() {
+        val quote = quoteSource?.getPreviousQuote()
+        if (quote == null)
+            return
+        qpf.show(quote)
+        rightNavBtn.visibility = View.VISIBLE
+    }
+
+    fun navRight() {
+        val quote = quoteSource?.getNextQuote()
+        if (quote == null)
+            return
+        qpf.show(quote)
+        leftNavBtn.visibility = View.VISIBLE
+    }
+
 }

@@ -7,8 +7,10 @@
 
     <string-array name="onboard_msgs">
         <item>Welcome to quoter! swipe or use the arrow to continue</item>
+        <item>Use the customize button to tweak your quote</item>
         <item>Tap share button to share the current quote</item>
         <item>You are all set! Thanks for using this app</item>
+        <item> </item>
     </string-array>
 
     <!--hints-->
@@ -21,11 +23,26 @@
     <string name="share_text">Save as</string>
     <string name="preview_string" translatable="false">Preview ABC</string>
     <string name="background_hdr">Background</string>
+    <string name="feature_hint_provider">You can select the provider for quotes from this menu. Yet to be implemented.</string>
 
     <string-array name="font_list">
         <item>serif</item>
         <item>sans-serif</item>
         <item>monospace</item>
     </string-array>
+
+    <string-array name="font_size_list">
+        <item>12</item>
+        <item>16</item>
+        <item>18</item>
+        <item>22</item>
+        <item>28</item>
+        <item>32</item>
+        <item>38</item>
+        <item>42</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

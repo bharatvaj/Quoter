@@ -13,10 +13,10 @@ import android.view.animation.AnimationUtils
 import com.thing.quoter.R
 import com.thing.quoter.model.Quote
 import com.thing.quoter.model.QuoteSetting
-import kotlinx.android.synthetic.main.fragment_display_quote.*
+import kotlinx.android.synthetic.main.fragment_quote_preview.*
 
 
-class DisplayQuoteFragment : Fragment(), View.OnLongClickListener {
+class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
     private var quoteSetting: QuoteSetting = QuoteSetting()
     private var listener: View.OnLongClickListener? = null
 
@@ -40,7 +40,7 @@ class DisplayQuoteFragment : Fragment(), View.OnLongClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_display_quote, container, false)
+        return inflater.inflate(R.layout.fragment_quote_preview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +53,7 @@ class DisplayQuoteFragment : Fragment(), View.OnLongClickListener {
     fun loadSetting(quoteSetting: QuoteSetting) {
         quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF
         else if (quoteSetting.fontFamily == "monospace") Typeface.MONOSPACE else Typeface.SANS_SERIF //FIXME Too much information hard coded
+        quoteTextView.textSize = quoteSetting.fontSize.toFloat()
     }
 
     fun getSetting(): QuoteSetting {
