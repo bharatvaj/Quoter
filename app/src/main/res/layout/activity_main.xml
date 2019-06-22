@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
-
     <FrameLayout
         android:id="@+id/mainFrameLayout"
         android:layout_width="match_parent"
@@ -26,7 +20,6 @@
         <include
             android:id="@+id/menuContainer"
             layout="@layout/toolbar" />
-
 
         <FrameLayout
             android:id="@+id/optionFrameLayout"

@@ -3,6 +3,7 @@ package com.thing.quoter
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
+import android.util.Log
 import android.view.*
 import com.squareup.picasso.Picasso
 import com.thing.quoter.fragment.CustomizeFragment
@@ -12,20 +13,16 @@ import com.thing.quoter.model.Quote
 import com.thing.quoter.model.QuoteProvider
 import com.thing.quoter.model.QuoteSetting
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_quote_preview.*
 import kotlinx.android.synthetic.main.navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppActivity(), View.OnClickListener,
         CustomizeFragment.OnCustomizeListener,
         ProviderSelectFragment.OnProviderChangedListener,
-        CustomizeFragment.OnTextCustomizeListener,
         View.OnLongClickListener {
 
-    override fun onTextCustomize(quoteSetting: QuoteSetting) {
-        qpf.loadSetting(quoteSetting)
-    }
-
-    val qpf: QuotePreviewFragment = QuotePreviewFragment()
+    val qpf: QuotePreviewFragment = QuotePreviewFragment().newInstance(QuoteSetting())
     var quoteSource: QuoteSource? = null
 
     override fun onLongClick(v: View?): Boolean {
@@ -49,7 +46,13 @@ class MainActivity : AppActivity(), View.OnClickListener,
                     toggleTheme()
                     return
                 }
-                Picasso.get().load(extraStr).into(bg)
+                qpf.setQuoteBackground(extraStr)
+            }
+            R.id.fontSpinner -> {
+                qpf.setQuoteTextFont(extraStr!!)
+            }
+            R.id.fontSizeEditText -> {
+                qpf.setQuoteTextSize(extraStr!!.toFloat())
             }
         }
     }
@@ -63,7 +66,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
             R.id.customizeSelect -> {
                 supportFragmentManager.beginTransaction()
                         .addToBackStack("customize")
-                        .replace(R.id.optionFrameLayout, CustomizeFragment().apply {
+                        .replace(R.id.optionFrameLayout, CustomizeFragment.newInstance(qpf.getSetting()).apply {
                             enterTransition = Fade(Fade.MODE_IN)
                             exitTransition = Fade(Fade.MODE_OUT)
                         })
@@ -104,8 +107,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
             theme.applyStyle(R.style.AppTheme_Light, true)
         }
         setContentView(R.layout.activity_main)
-
-        QuoterHelper.quoteSetting = QuoteSetting()
 
         supportFragmentManager
                 .beginTransaction()

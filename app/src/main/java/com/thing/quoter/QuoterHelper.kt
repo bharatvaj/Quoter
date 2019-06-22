@@ -17,7 +17,6 @@ object QuoterHelper {
 
     private var quoteProvidersRef: CollectionReference = FirebaseFirestore.getInstance().collection("quoteProvider")
     var quoteProviders = FirestoreList(QuoteProvider::class.java, quoteProvidersRef)
-    var quoteSetting: QuoteSetting? = null
 
     var backgrounds = LinkedHashSet<String>()
 

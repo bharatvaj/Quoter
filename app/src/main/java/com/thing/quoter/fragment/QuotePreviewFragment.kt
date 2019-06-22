@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
+import com.squareup.picasso.Picasso
 
 import com.thing.quoter.R
 import com.thing.quoter.model.Quote
@@ -17,8 +20,28 @@ import kotlinx.android.synthetic.main.fragment_quote_preview.*
 
 
 class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
-    private var quoteSetting: QuoteSetting = QuoteSetting()
+
+    companion object {
+        const val ARG_1 = "QUOTE_SETTING"
+    }
+
+    private var quoteSetting: QuoteSetting? = null
     private var listener: View.OnLongClickListener? = null
+
+    fun newInstance(quoteSetting: QuoteSetting): QuotePreviewFragment {
+        return QuotePreviewFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_1, quoteSetting)
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.apply {
+            quoteSetting = arguments?.getSerializable(ARG_1) as QuoteSetting
+        }
+    }
 
     override fun onLongClick(v: View): Boolean {
         if (listener == null) return false
@@ -31,7 +54,7 @@ class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
 
     fun show(quote: Quote?) {
         if (quote == null) return show(getString(R.string.quote_loading))
-        quoteContainer.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply {
+        quoteTextView.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply {
             interpolator = FastOutSlowInInterpolator()
         })
         quoteTextView.text = if (quote.quote.isEmpty()) context?.getString(R.string.quote_loading) else quote.quote
@@ -50,14 +73,30 @@ class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
 //        quoteTextView.setOnLongClickListener(this)
     }
 
-    fun loadSetting(quoteSetting: QuoteSetting) {
-        quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF
-        else if (quoteSetting.fontFamily == "monospace") Typeface.MONOSPACE else Typeface.SANS_SERIF //FIXME Too much information hard coded
-        quoteTextView.textSize = quoteSetting.fontSize.toFloat()
+    fun setQuoteTextFont(font: String) {
+        quoteTextView.typeface = if (font == "serif") Typeface.SERIF
+        else if (font == "monospace") Typeface.MONOSPACE else Typeface.SANS_SERIF //FIXME Too much information hard coded
+        quoteSetting?.quoteFontFamily = font
+    }
+
+    fun setQuoteTextSize(fontSize: Float) {
+        quoteTextView.textSize = fontSize
+        quoteSetting?.quoteFontSize = fontSize;
+    }
+
+    fun setQuoteBackground(bg: String) {
+        Picasso.get().load(bg).into(backgroundImageView)
+        quoteSetting?.bg = bg
     }
 
     fun getSetting(): QuoteSetting {
-        return quoteSetting
+        return quoteSetting!!
+    }
+
+    fun setSetting(quoteSetting: QuoteSetting) {
+        setQuoteBackground(quoteSetting.bg)
+        setQuoteTextFont(quoteSetting.quoteFontFamily)
+        setQuoteTextSize(quoteSetting.quoteFontSize)
     }
 
     override fun onAttach(context: Context) {

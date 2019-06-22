@@ -31,18 +31,4 @@
         <item>monospace</item>
     </string-array>
 
-    <string-array name="font_size_list">
-        <item>12</item>
-        <item>16</item>
-        <item>18</item>
-        <item>22</item>
-        <item>28</item>
-        <item>32</item>
-        <item>38</item>
-        <item>42</item>
-    </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>
