@@ -1,15 +1,13 @@
 package com.thing.quoter.fragment
 
-import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.thing.quoter.QuoteSource
+import androidx.fragment.app.Fragment
+import com.thing.quoter.helper.QuoteSource
 
 import com.thing.quoter.R
-import kotlinx.android.synthetic.main.navigation.*
 
 
 class QuotesFragment : Fragment() {

@@ -3,16 +3,16 @@ package com.thing.quoter.fragment
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.animation.FastOutSlowInInterpolator
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 import com.thing.quoter.R
-import com.thing.quoter.model.Quote
-import com.thing.quoter.model.QuoteSetting
+import com.thing.quoter.repository.model.Quote
+import com.thing.quoter.repository.model.QuoteSetting
 import kotlinx.android.synthetic.main.fragment_quote_preview.*
 
 

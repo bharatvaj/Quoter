@@ -1,10 +1,9 @@
-package com.thing.quoter
+package com.thing.quoter.helper
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.thing.quoter.model.Quote
-import com.thing.quoter.model.QuoteProvider
-import com.thing.quoter.model.QuoteSetting
+import com.thing.quoter.repository.model.QuoteProvider
+import com.thing.quoter.repository.model.QuoteSetting
 import org.greenrobot.eventbus.EventBus
 import java.lang.NullPointerException
 import java.net.HttpURLConnection

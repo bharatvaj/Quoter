@@ -1,7 +1,7 @@
-package com.thing.quoter;
+package com.thing.quoter.helper;
 
-import android.databinding.ObservableArrayMap;
-import android.databinding.ObservableMap;
+import androidx.databinding.ObservableArrayMap;
+import androidx.databinding.ObservableMap;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;

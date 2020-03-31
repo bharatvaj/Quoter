@@ -1,16 +1,15 @@
 package com.thing.quoter.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
-import com.thing.quoter.FirestoreList
+import androidx.recyclerview.widget.RecyclerView
 import com.thing.quoter.R
-import com.thing.quoter.model.QuoteProvider
+import com.thing.quoter.repository.model.QuoteProvider
+import com.thing.quoter.helper.FirestoreList
 import kotlinx.android.synthetic.main.provider_item.view.*
 
 class ProviderViewAdapter(val context: Context, val providers: FirestoreList<QuoteProvider>) : RecyclerView.Adapter<ProviderViewAdapter.ProviderViewHolder>() {

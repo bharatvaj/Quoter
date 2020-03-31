@@ -1,15 +1,16 @@
-package com.thing.quoter
+package com.thing.quoter.helper
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.thing.quoter.model.Quote
-import com.thing.quoter.model.QuoteProvider
+import com.thing.quoter.repository.model.Quote
+import com.thing.quoter.repository.model.QuoteProvider
 
 class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>? = null) {
 
     //FIXME Use actual database
     private var quotesRef: CollectionReference = FirebaseFirestore.getInstance().collection("quotes")
-    var firestoreQuotes = FirestoreList(Quote::class.java, quotesRef)
+    var firestoreQuotes =
+        FirestoreList(Quote::class.java, quotesRef)
     ///////////////////////////////////////////
     var quotes = ArrayList<Quote>()
     var index: Int = -1

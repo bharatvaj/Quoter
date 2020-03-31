@@ -1,4 +1,4 @@
-package com.thing.quoter
+package com.thing.quoter.service
 
 import android.app.Service
 import android.content.Intent

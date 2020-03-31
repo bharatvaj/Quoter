@@ -1,12 +1,12 @@
 package com.thing.quoter.adapter
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
-import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.thing.quoter.R
 import kotlinx.android.synthetic.main.background_preview_item.view.*
@@ -34,6 +34,7 @@ class BackgroundPreviewViewAdapter(val context: Context, val backgrounds: Set<St
         var backgroundPreviewImageView: ImageView = itemView.backgroundPreview
 
         fun bind(backgroundRes: String) {
+            Log.i("TF", backgroundRes);
             Picasso.get()
                     .load(backgroundRes)
                     .placeholder(R.drawable.bg_preview_item_placeholder)

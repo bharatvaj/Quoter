@@ -2,18 +2,18 @@ package com.thing.quoter.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.thing.quoter.QuoterHelper
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.thing.quoter.helper.QuoterHelper
 
 import com.thing.quoter.R
 import com.thing.quoter.adapter.BackgroundPreviewViewAdapter
-import com.thing.quoter.model.QuoteSetting
+import com.thing.quoter.repository.model.QuoteSetting
 import kotlinx.android.synthetic.main.customize_background.*
 import kotlinx.android.synthetic.main.customize_text.*
 import org.greenrobot.eventbus.EventBus
@@ -110,8 +110,10 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
             a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             fontSizeSpinner.adapter = a
         }
-        fontSpinner.setSelection(context!!.resources.getStringArray(R.array.font_list).indexOf(QuoterHelper.quoteSetting!!.fontFamily))
-        fontSizeSpinner.setSelection(context!!.resources.getStringArray(R.array.font_size_list).indexOf(QuoterHelper.quoteSetting!!.fontSize.toString()))
+        fontSpinner.setSelection(context!!.resources.getStringArray(R.array.font_list).indexOf(
+            QuoterHelper.quoteSetting!!.fontFamily))
+        fontSizeSpinner.setSelection(context!!.resources.getStringArray(R.array.font_size_list).indexOf(
+            QuoterHelper.quoteSetting!!.fontSize.toString()))
 
         fontSpinner.onItemSelectedListener = this
         fontSizeSpinner.onItemSelectedListener = this

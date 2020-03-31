@@ -1,16 +1,21 @@
-package com.thing.quoter
+package com.thing.quoter.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
 import android.view.*
+import com.google.firebase.FirebaseApp
 import com.squareup.picasso.Picasso
+import com.thing.quoter.AppActivity
+import com.thing.quoter.helper.QuoteSource
+import com.thing.quoter.helper.QuoterHelper
+import com.thing.quoter.R
 import com.thing.quoter.fragment.CustomizeFragment
 import com.thing.quoter.fragment.QuotePreviewFragment
 import com.thing.quoter.fragment.ProviderSelectFragment
-import com.thing.quoter.model.Quote
-import com.thing.quoter.model.QuoteProvider
-import com.thing.quoter.model.QuoteSetting
+import com.thing.quoter.repository.model.Quote
+import com.thing.quoter.repository.model.QuoteProvider
+import com.thing.quoter.repository.model.QuoteSetting
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -104,6 +109,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
             theme.applyStyle(R.style.AppTheme_Light, true)
         }
         setContentView(R.layout.activity_main)
+        FirebaseApp.initializeApp(baseContext)
 
         QuoterHelper.quoteSetting = QuoteSetting()
 

@@ -1,4 +1,4 @@
-package com.thing.quoter.model
+package com.thing.quoter.repository.model
 
 import java.io.Serializable
 
