@@ -6,12 +6,16 @@
     android:orientation="vertical"
     tools:context=".fragment.CustomizeFragment">
 
-    <include layout="@layout/customize_background" />
+    <include
+        android:id="@+id/customizeBackground"
+        layout="@layout/customize_background" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_medium" />
 
-    <include layout="@layout/customize_text" />
+    <include
+        android:id="@+id/customizeText"
+        layout="@layout/customize_text" />
 
 </LinearLayout>

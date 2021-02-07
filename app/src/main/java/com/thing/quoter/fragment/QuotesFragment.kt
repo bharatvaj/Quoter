@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import com.thing.quoter.helper.QuoteSource
 
 import com.thing.quoter.R
+import com.thing.quoter.databinding.FragmentQuotesBinding
 
 
 class QuotesFragment : Fragment() {
 
     private var listener: OnQuoteChangedListener? = null
+    private lateinit var binding: FragmentQuotesBinding
 
     fun setOnQuoteChangedListener(listener: OnQuoteChangedListener) {
         this.listener = listener
@@ -21,7 +23,9 @@ class QuotesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quotes, container, false)
+        binding = FragmentQuotesBinding.inflate(layoutInflater, container, false)
+        return binding.root
+       // return inflater.inflate(R.layout.fragment_quotes, container, false)
     }
 
 //

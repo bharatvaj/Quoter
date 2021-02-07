@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
         android:src="@drawable/ic_left_chevron"
         android:visibility="gone" />
 
@@ -19,6 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_medium"
         android:src="@drawable/ic_right_chevron"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 </RelativeLayout>

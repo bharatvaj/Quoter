@@ -11,22 +11,25 @@ import com.thing.quoter.helper.QuoterHelper
 
 import com.thing.quoter.R
 import com.thing.quoter.adapter.ProviderViewAdapter
-import kotlinx.android.synthetic.main.fragment_provider_select.*
+import com.thing.quoter.databinding.FragmentProviderSelectBinding
 
 class ProviderSelectFragment : Fragment() {
     private var listener: OnProviderChangedListener? = null
+    private lateinit var binding: FragmentProviderSelectBinding
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_provider_select, container, false)
+        binding = FragmentProviderSelectBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_provider_select, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = ProviderViewAdapter(context!!, QuoterHelper.quoteProviders)
-        providerRecyclerView.adapter = adapter
-        providerRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.providerRecyclerView.adapter = adapter
+        binding.providerRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun onAttach(context: Context) {

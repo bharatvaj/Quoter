@@ -17,6 +17,7 @@
         android:padding="@dimen/margin_medium"
         android:drawablePadding="@dimen/margin_medium"
         android:drawableStart="@drawable/ic_round_info_button"
+        android:drawableLeft="@drawable/ic_round_info_button"
         android:text="@string/feature_hint_provider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

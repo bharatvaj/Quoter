@@ -9,9 +9,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.thing.quoter.R
-import kotlinx.android.synthetic.main.background_preview_item.view.*
+import com.thing.quoter.databinding.BackgroundPreviewItemBinding
 
-class BackgroundPreviewViewAdapter(val context: Context, val backgrounds: Set<String>) : RecyclerView.Adapter<BackgroundPreviewViewAdapter.BackgroundViewHolder>() {
+class BackgroundPreviewViewAdapter(val context: Context, private val backgrounds: Set<String>) : RecyclerView.Adapter<BackgroundPreviewViewAdapter.BackgroundViewHolder>() {
 
     var listener: ((String) -> Unit)? = null
 
@@ -31,7 +31,7 @@ class BackgroundPreviewViewAdapter(val context: Context, val backgrounds: Set<St
     }
 
     class BackgroundViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var backgroundPreviewImageView: ImageView = itemView.backgroundPreview
+        private val backgroundPreviewImageView: ImageView = itemView.findViewById(R.id.backgroundPreview)
 
         fun bind(backgroundRes: String) {
             Log.i("TF", backgroundRes);

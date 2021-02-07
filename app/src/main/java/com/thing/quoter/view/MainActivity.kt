@@ -10,21 +10,25 @@ import com.thing.quoter.AppActivity
 import com.thing.quoter.helper.QuoteSource
 import com.thing.quoter.helper.QuoterHelper
 import com.thing.quoter.R
+import com.thing.quoter.databinding.ActivityMainBinding
+import com.thing.quoter.databinding.NavigationBinding
+import com.thing.quoter.databinding.ToolbarBinding
 import com.thing.quoter.fragment.CustomizeFragment
 import com.thing.quoter.fragment.QuotePreviewFragment
 import com.thing.quoter.fragment.ProviderSelectFragment
 import com.thing.quoter.repository.model.Quote
 import com.thing.quoter.repository.model.QuoteProvider
 import com.thing.quoter.repository.model.QuoteSetting
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.navigation.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppActivity(), View.OnClickListener,
         CustomizeFragment.OnCustomizeListener,
         ProviderSelectFragment.OnProviderChangedListener,
         CustomizeFragment.OnTextCustomizeListener,
         View.OnLongClickListener {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navBar: NavigationBinding
+    private lateinit var menuContainer: ToolbarBinding
 
     override fun onTextCustomize(quoteSetting: QuoteSetting) {
         qpf.loadSetting(quoteSetting)
@@ -54,7 +58,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
                     toggleTheme()
                     return
                 }
-                Picasso.get().load(extraStr).into(bg)
+                Picasso.get().load(extraStr).into(binding.bg)
             }
         }
     }
@@ -87,7 +91,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
                 showMenu(false)
                 val shareIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(rootView)))
+                    putExtra(Intent.EXTRA_STREAM, getImageUri(getBitmapFromView(binding.rootView)))
                     type = "image/*"
                 }
                 showMenu(true)
@@ -98,8 +102,8 @@ class MainActivity : AppActivity(), View.OnClickListener,
 
     fun showMenu(b: Boolean) {
         val v = if (b) View.VISIBLE else View.GONE
-        menuContainer.visibility = v
-        navBar.visibility = v
+        menuContainer.root.visibility = v
+        navBar.root.visibility = v
     }
 
 
@@ -108,17 +112,24 @@ class MainActivity : AppActivity(), View.OnClickListener,
         if (isFirstTime) {
             theme.applyStyle(R.style.AppTheme_Light, true)
         }
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val root = binding.root
+        setContentView(root)
         FirebaseApp.initializeApp(baseContext)
 
         QuoterHelper.quoteSetting = QuoteSetting()
+
+        menuContainer = binding.menuContainer
+        navBar = binding.navBar
+
+        val mainFrameLayout = binding.mainFrameLayout
 
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.mainFrameLayout, qpf)
                 .runOnCommit {
                     if (isFirstTime) {
-                        menuContainer.visibility = View.GONE
+                        binding.menuContainer.root.visibility = View.GONE
                         val quotes = ArrayList<Quote>()
                         for (quoteMsg in resources.getStringArray(R.array.onboard_msgs)) {
                             quotes.add(Quote(quoteMsg, getString(R.string.company_name)))
@@ -132,28 +143,28 @@ class MainActivity : AppActivity(), View.OnClickListener,
                     } else {
                         quoteSource = QuoteSource(QuoteProvider())
                         //then register click
-                        providerSelect.setOnClickListener(this)
-                        customizeSelect.setOnClickListener(this)
-                        shareBtn.setOnClickListener(this)
+                        menuContainer.providerSelect.setOnClickListener(this)
+                        menuContainer.customizeSelect.setOnClickListener(this)
+                        menuContainer.shareBtn.setOnClickListener(this)
                         mainFrameLayout.setOnClickListener(this)
 
                         quoteSource?.onEndReachedListener = {
                             qpf.show(it)
-                            rightNavBtn.visibility = View.GONE
-                            leftNavBtn.visibility = View.VISIBLE
+                            navBar.rightNavBtn.visibility = View.GONE
+                            navBar.leftNavBtn.visibility = View.VISIBLE
                         }
                     }
                     //assigning callbacks
-                    leftNavBtn.setOnClickListener {
+                    navBar.leftNavBtn.setOnClickListener {
                         navLeft()
                     }
-                    rightNavBtn.setOnClickListener {
+                    navBar.rightNavBtn.setOnClickListener {
                         navRight()
                     }
                     quoteSource?.onStartReachedListener = {
                         qpf.show(it)
-                        leftNavBtn.visibility = View.GONE
-                        rightNavBtn.visibility = View.VISIBLE
+                        navBar.leftNavBtn.visibility = View.GONE
+                        navBar.rightNavBtn.visibility = View.VISIBLE
                     }
                     //populate
                     quoteSource?.populate()
@@ -179,7 +190,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
         if (quote == null)
             return
         qpf.show(quote)
-        rightNavBtn.visibility = View.VISIBLE
+        navBar.rightNavBtn.visibility = View.VISIBLE
     }
 
     fun navRight() {
@@ -187,7 +198,7 @@ class MainActivity : AppActivity(), View.OnClickListener,
         if (quote == null)
             return
         qpf.show(quote)
-        leftNavBtn.visibility = View.VISIBLE
+        navBar.leftNavBtn.visibility = View.VISIBLE
     }
 
 }

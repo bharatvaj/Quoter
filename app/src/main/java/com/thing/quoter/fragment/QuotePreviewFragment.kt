@@ -11,14 +11,15 @@ import android.view.animation.AnimationUtils
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 
 import com.thing.quoter.R
+import com.thing.quoter.databinding.FragmentQuotePreviewBinding
 import com.thing.quoter.repository.model.Quote
 import com.thing.quoter.repository.model.QuoteSetting
-import kotlinx.android.synthetic.main.fragment_quote_preview.*
 
 
 class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
     private var quoteSetting: QuoteSetting = QuoteSetting()
     private var listener: View.OnLongClickListener? = null
+    private lateinit var binding: FragmentQuotePreviewBinding
 
     override fun onLongClick(v: View): Boolean {
         if (listener == null) return false
@@ -31,16 +32,18 @@ class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
 
     fun show(quote: Quote?) {
         if (quote == null) return show(getString(R.string.quote_loading))
-        quoteContainer.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply {
+        binding.quoteContainer.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in).apply {
             interpolator = FastOutSlowInInterpolator()
         })
-        quoteTextView.text = if (quote.quote.isEmpty()) context?.getString(R.string.quote_loading) else quote.quote
-        authorTextView.text = if (quote.author.isEmpty()) context?.getString(R.string.author_unknown) else quote.author
+        binding.quoteTextView.text = if (quote.quote.isEmpty()) context?.getString(R.string.quote_loading) else quote.quote
+        binding.authorTextView.text = if (quote.author.isEmpty()) context?.getString(R.string.author_unknown) else quote.author
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_quote_preview, container, false)
+        binding = FragmentQuotePreviewBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_quote_preview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,9 +54,9 @@ class QuotePreviewFragment : Fragment(), View.OnLongClickListener {
     }
 
     fun loadSetting(quoteSetting: QuoteSetting) {
-        quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF
+        binding.quoteTextView.typeface = if (quoteSetting.fontFamily == "serif") Typeface.SERIF
         else if (quoteSetting.fontFamily == "monospace") Typeface.MONOSPACE else Typeface.SANS_SERIF //FIXME Too much information hard coded
-        quoteTextView.textSize = quoteSetting.fontSize.toFloat()
+        binding.quoteTextView.textSize = quoteSetting.fontSize.toFloat()
     }
 
     fun getSetting(): QuoteSetting {

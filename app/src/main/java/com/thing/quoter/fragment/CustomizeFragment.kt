@@ -13,9 +13,11 @@ import com.thing.quoter.helper.QuoterHelper
 
 import com.thing.quoter.R
 import com.thing.quoter.adapter.BackgroundPreviewViewAdapter
+import com.thing.quoter.databinding.CustomizeBackgroundBinding
+import com.thing.quoter.databinding.CustomizeTextBinding
+import com.thing.quoter.databinding.FragmentCustomizeBinding
+import com.thing.quoter.databinding.FragmentQuotePreviewBinding
 import com.thing.quoter.repository.model.QuoteSetting
-import kotlinx.android.synthetic.main.customize_background.*
-import kotlinx.android.synthetic.main.customize_text.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -23,6 +25,9 @@ import org.greenrobot.eventbus.ThreadMode
 class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     var qpf: QuotePreviewFragment? = null
+    private lateinit var binding: FragmentCustomizeBinding
+    private lateinit var customizeBackground: CustomizeBackgroundBinding
+    private lateinit var customizeText: CustomizeTextBinding
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
     }
@@ -54,7 +59,11 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customize, container, false)
+        binding = FragmentCustomizeBinding.inflate(inflater, container, false)
+        customizeBackground = binding.customizeBackground
+        customizeText = binding.customizeText
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_customize, container, false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -74,14 +83,14 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        colorChange.setOnClickListener(this)
-        backgroundChange.setOnClickListener(this)
-        userBgChange.setOnClickListener(this)
-        toggleSpeaker.setOnClickListener(this)
+        customizeBackground.colorChange.setOnClickListener(this)
+        customizeBackground.backgroundChange.setOnClickListener(this)
+        customizeBackground.userBgChange.setOnClickListener(this)
+        customizeText.toggleSpeaker.setOnClickListener(this)
 
         adapter = BackgroundPreviewViewAdapter(context!!, QuoterHelper.backgrounds)
-        backgroundPreviewRecyclerView.adapter = adapter
-        backgroundPreviewRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        customizeBackground.backgroundPreviewRecyclerView.adapter = adapter
+        customizeBackground.backgroundPreviewRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         adapter?.listener = fun(str: String) {
             listener?.onCustomize(BACKGROUND_IMAGE, str)
         }
@@ -99,7 +108,7 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
                 android.R.layout.simple_spinner_item
         ).also { a ->
             a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            fontSpinner.adapter = a
+            customizeText.fontSpinner.adapter = a
         }
 
         ArrayAdapter.createFromResource(
@@ -108,15 +117,15 @@ class CustomizeFragment : Fragment(), View.OnClickListener, AdapterView.OnItemSe
                 android.R.layout.simple_spinner_item
         ).also { a ->
             a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            fontSizeSpinner.adapter = a
+            customizeText.fontSizeSpinner.adapter = a
         }
-        fontSpinner.setSelection(context!!.resources.getStringArray(R.array.font_list).indexOf(
+        customizeText.fontSpinner.setSelection(context!!.resources.getStringArray(R.array.font_list).indexOf(
             QuoterHelper.quoteSetting!!.fontFamily))
-        fontSizeSpinner.setSelection(context!!.resources.getStringArray(R.array.font_size_list).indexOf(
+        customizeText.fontSizeSpinner.setSelection(context!!.resources.getStringArray(R.array.font_size_list).indexOf(
             QuoterHelper.quoteSetting!!.fontSize.toString()))
 
-        fontSpinner.onItemSelectedListener = this
-        fontSizeSpinner.onItemSelectedListener = this
+        customizeText.fontSpinner.onItemSelectedListener = this
+        customizeText.fontSizeSpinner.onItemSelectedListener = this
     }
 
     override fun onClick(view: View) {
