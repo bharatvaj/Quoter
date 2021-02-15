@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "client/paragraph.proto";
+
+message QuoteSetting {
+    string id = 1;
+    string quoteId = 2;
+    Paragraph quoteParagraph = 3;
+    Paragraph authorParagraph = 4;
+    // the background of the image
+    string imageUrl = 5;
+}

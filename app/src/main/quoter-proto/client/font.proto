@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message Font {
+    string postscriptName = 1;
+    string fontFamily = 2;
+    bool isBold = 3;
+    bool isItalic = 4;
+    bool isUnderline = 5;
+    bool isStrikethrough = 6;
+}

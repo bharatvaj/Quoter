@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Quote {
+    string id = 1;
+    string quote = 2;
+    string author = 3;
+    repeated string genres = 4;
+}

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Bound {
+    int32 left = 1;
+    int32 top = 2;
+    int32 right = 3;
+    int32 bottom = 4;
+}

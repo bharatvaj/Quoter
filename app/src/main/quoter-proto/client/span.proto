@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "client/font.proto";
+
+message Span {
+    string text = 1;
+    string textSize = 2;
+    int32 colorARGB = 3;
+    Font font = 4;
+}

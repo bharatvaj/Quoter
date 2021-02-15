@@ -3,9 +3,13 @@ package com.thing.quoter.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.thing.quoter.R
 import com.thing.quoter.databinding.ProviderItemBinding
 import com.thing.quoter.helper.FirestoreList
 import com.thing.quoter.repository.model.QuoteProvider
@@ -31,9 +35,12 @@ class ProviderViewAdapter(val context: Context, private val providers: Firestore
         val providerName: TextView = itemBinding.providerName
         fun bind(quoteProvider: QuoteProvider) {
             providerName.text = quoteProvider.providerName
-//            Picasso.get()
-//                    .load(R.drawable.ic_globe)
-//                    .into(providerImage)
+            Picasso.get()
+                    .load(quoteProvider.providerImageUrl)
+                    .fit()
+                    .centerCrop()
+                    .error(R.drawable.ic_globe)
+                    .into(providerImage)
         }
     }
 }

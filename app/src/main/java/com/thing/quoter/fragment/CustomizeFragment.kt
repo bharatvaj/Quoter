@@ -16,7 +16,6 @@ import com.thing.quoter.adapter.BackgroundPreviewViewAdapter
 import com.thing.quoter.databinding.CustomizeBackgroundBinding
 import com.thing.quoter.databinding.CustomizeTextBinding
 import com.thing.quoter.databinding.FragmentCustomizeBinding
-import com.thing.quoter.databinding.FragmentQuotePreviewBinding
 import com.thing.quoter.repository.model.QuoteSetting
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "client/span.proto";
+import "client/bound.proto";
+
+message Paragraph {
+    // having multiple spans allows us to use formatting for individual letters
+    repeated Span spans = 1;
+    // the bounds of textbox
+    Bound bound = 2;
+}
