@@ -1,0 +1,3 @@
+[submodule "quoter-proto"]
+	path = quoter-proto
+	url = https://github.com/bharatvaj/quoter-proto

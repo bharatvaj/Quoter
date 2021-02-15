@@ -3,7 +3,7 @@
 buildscript {
     ext.kotlin_version = '1.4.30'
     ext.protobuf_plugin_version = '0.8.14'
-    ext.protobuf_version = '3.0.0'
+    ext.protobuf_version = '3.14.0'
     repositories {
         google()
         jcenter()
