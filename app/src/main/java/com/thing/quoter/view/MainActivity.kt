@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.Fade
 import android.view.*
-import com.google.firebase.FirebaseApp
 import com.squareup.picasso.Picasso
 import com.thing.quoter.AppActivity
 import com.thing.quoter.helper.QuoteSource
@@ -115,7 +114,6 @@ class MainActivity : AppActivity(), View.OnClickListener,
         binding = ActivityMainBinding.inflate(layoutInflater)
         val root = binding.root
         setContentView(root)
-        FirebaseApp.initializeApp(baseContext)
 
         QuoterHelper.quoteSetting = QuoteSetting()
 

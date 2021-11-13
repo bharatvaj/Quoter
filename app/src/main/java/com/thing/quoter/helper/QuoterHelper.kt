@@ -1,7 +1,5 @@
 package com.thing.quoter.helper
 
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.thing.quoter.repository.model.QuoteProvider
 import com.thing.quoter.repository.model.QuoteSetting
 import org.greenrobot.eventbus.EventBus
@@ -14,8 +12,10 @@ import kotlin.concurrent.thread
 
 object QuoterHelper {
 
-    private var quoteProvidersRef: CollectionReference = FirebaseFirestore.getInstance().collection("quoteProvider")
-    var quoteProviders = FirestoreList(QuoteProvider::class.java, quoteProvidersRef)
+    // private var quoteProvidersRef: CollectionReference = FirebaseFirestore.getInstance().collection("quoteProvider")
+    // var quoteProviders = FirestoreList(QuoteProvider::class.java, quoteProvidersRef)
+	// FIXME Use a more flexible type
+    var quoteProviders = emptyArray<QuoteProvider>()
     var quoteSetting: QuoteSetting? = null
 
     var backgrounds = LinkedHashSet<String>()

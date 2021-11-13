@@ -9,4 +9,6 @@
     <string name="toggle_speaker_hint">" மாற்று பேச்சாளர்"</string>
     <string name="share_text">சேமி</string>
     <string name="share_btn_hint">பகிர்</string>
+    <string name="background_hdr">Background</string>
+    <string name="feature_hint_provider">You can select the provider for quotes from this menu. Yet to be implemented.</string>
 </resources>

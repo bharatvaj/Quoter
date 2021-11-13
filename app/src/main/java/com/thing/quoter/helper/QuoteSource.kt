@@ -1,17 +1,15 @@
 package com.thing.quoter.helper
 
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.thing.quoter.repository.model.Quote
 import com.thing.quoter.repository.model.QuoteProvider
 
 class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>? = null) {
 
     //FIXME Use actual database
-    private var quotesRef: CollectionReference = FirebaseFirestore.getInstance().collection("quotes")
-    var firestoreQuotes =
-        FirestoreList(Quote::class.java, quotesRef)
-    ///////////////////////////////////////////
+    // private var quotesRef: CollectionReference = FirebaseFirestore.getInstance().collection("quotes")
+    // var firestoreQuotes =
+    //     FirestoreList(Quote::class.java, quotesRef)
+
     var quotes = ArrayList<Quote>()
     var index: Int = -1
     var onStartReachedListener: ((Quote) -> Unit)? = null
@@ -29,15 +27,14 @@ class QuoteSource(var quoteProvider: QuoteProvider, var extra: ArrayList<Quote>?
         var isFirst = true
 
         //FIXME Read from JSONQuoteMapper class
-        firestoreQuotes.setOnAddListener { _, quote ->
-            if (isFirst) {
-                onStartReachedListener?.invoke(quote)
-                index++
-            }
-            quotes.add(quote)
-            isFirst = false
-        }
-        //////////////////////////////////////////////////////////////
+        // firestoreQuotes.setOnAddListener { _, quote ->
+        //     if (isFirst) {
+        //         onStartReachedListener?.invoke(quote)
+        //         index++
+        //     }
+        //     quotes.add(quote)
+        //     isFirst = false
+        // }
     }
 
     fun getNextQuote(): Quote? {

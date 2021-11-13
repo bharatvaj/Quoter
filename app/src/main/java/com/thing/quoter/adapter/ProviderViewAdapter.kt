@@ -7,10 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thing.quoter.databinding.ProviderItemBinding
-import com.thing.quoter.helper.FirestoreList
 import com.thing.quoter.repository.model.QuoteProvider
 
-class ProviderViewAdapter(val context: Context, private val providers: FirestoreList<QuoteProvider>) : RecyclerView.Adapter<ProviderViewAdapter.ProviderViewHolder>() {
+class ProviderViewAdapter(val context: Context, private val providers: Array<QuoteProvider>) : RecyclerView.Adapter<ProviderViewAdapter.ProviderViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ProviderViewHolder {
         val binding = ProviderItemBinding.inflate(LayoutInflater.from(context), p0, false)
         return ProviderViewHolder(binding)
@@ -22,7 +21,7 @@ class ProviderViewAdapter(val context: Context, private val providers: Firestore
 
     override fun onBindViewHolder(p0: ProviderViewHolder, p1: Int) {
         p0.setIsRecyclable(false)
-        val quoteProvider = providers.keyAt(p1)
+        val quoteProvider = providers[p1]
         p0.bind(quoteProvider)
     }
 
